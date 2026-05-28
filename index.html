@@ -3,25 +3,130 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>La Esperanza | Catálogo</title>
+    <title>La Esperanza | Portal Agrícola</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        body { background-color: #f8f9fa; }
+        body { background-color: #f4f7f6; }
         .navbar { background-color: #0F9D58; }
+        .oculto { display: none !important; }
+        .card-producto { transition: transform 0.2s; }
+        .card-producto:hover { transform: scale(1.02); }
     </style>
 </head>
 <body>
-    <nav class="navbar navbar-dark shadow-sm">
+
+    <nav class="navbar navbar-dark shadow-sm sticky-top">
         <div class="container">
             <span class="navbar-brand mb-0 h1 fw-bold">🌾 La Esperanza</span>
+            <div id="nav-usuario" class="oculto text-white">
+                <span id="nombre-usuario" class="me-3 d-none d-md-inline"></span>
+                <button onclick="cerrarSesion()" class="btn btn-sm btn-outline-light">Cerrar Sesión</button>
+            </div>
         </div>
     </nav>
 
-    <div class="container mt-5">
-        <h2 class="fw-bold mb-4">Catálogo en Tiempo Real</h2>
-        <div id="alerta-mensaje"></div>
-        <div class="row" id="catalogo-productos">
-            <p class="text-muted">Cargando catálogo desde la nube...</p>
+    <div class="container mt-4 mb-5">
+        
+        <div id="seccion-login" class="row justify-content-center">
+            <div class="col-md-5">
+                <div class="card shadow">
+                    <div class="card-body p-4">
+                        <h3 class="text-center fw-bold mb-4">Iniciar Sesión</h3>
+                        <div id="alerta-login"></div>
+                        <div class="mb-3">
+                            <label class="form-label">Correo Electrónico</label>
+                            <input type="email" id="login-correo" class="form-control" value="admin@esperanza.com">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Contraseña</label>
+                            <input type="password" id="login-pass" class="form-control" value="123456">
+                        </div>
+                        <button onclick="iniciarSesion()" class="btn btn-success w-100 fw-bold">Ingresar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="seccion-panel" class="oculto">
+            
+            <ul class="nav nav-pills nav-fill mb-4 bg-white shadow-sm rounded p-2">
+                <li class="nav-item">
+                    <button class="nav-link active fw-bold" id="btn-tab-comprar" onclick="cambiarTab('comprar')">🛒 Comprar Insumos</button>
+                </li>
+                <li class="nav-item">
+                    <button class="nav-link fw-bold text-success" id="btn-tab-vender" onclick="cambiarTab('vender')">🚜 Vender Cosecha</button>
+                </li>
+            </ul>
+
+            <div id="tab-comprar">
+                <div class="row">
+                    <div class="col-lg-8">
+                        <h4 class="fw-bold mb-3">Catálogo Disponible</h4>
+                        <div class="row" id="catalogo-productos">
+                            <p class="text-muted">Cargando catálogo...</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 mt-4 mt-lg-0">
+                        <div class="card shadow-sm sticky-top" style="top: 80px;">
+                            <div class="card-body">
+                                <h5 class="fw-bold">Detalle de Compra</h5>
+                                <hr>
+                                <div id="alerta-compra"></div>
+                                
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold small">Tipo de Entrega:</label>
+                                    <select id="tipo-entrega" class="form-select mb-2">
+                                        <option value="Retiro en Kiosco">Retiro en Kiosco (Gratis)</option>
+                                        <option value="A Domicilio">Envío a Domicilio (+Q25)</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold small">Método de Pago:</label>
+                                    <select id="metodo-pago" class="form-select mb-3">
+                                        <option value="Efectivo contra entrega">Efectivo contra entrega</option>
+                                        <option value="Transferencia">Transferencia Bancaria</option>
+                                    </select>
+                                </div>
+
+                                <p class="text-muted small">Selecciona un producto del catálogo para comprar.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="tab-vender" class="oculto">
+                <div class="row justify-content-center">
+                    <div class="col-md-6">
+                        <div class="card shadow-sm border-success">
+                            <div class="card-body p-4">
+                                <h4 class="fw-bold mb-3 text-success">Ofrecer Cosecha al Kiosco</h4>
+                                <p class="text-muted small">Llena este formulario y nos pondremos en contacto contigo para coordinar la compra de tu cosecha.</p>
+                                <div id="alerta-venta"></div>
+                                
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold">¿Qué producto ofreces?</label>
+                                    <input type="text" id="venta-producto" class="form-control" placeholder="Ej. Maíz blanco, Tomate manzano...">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold">Cantidad (Lbs o Quintales)</label>
+                                    <input type="number" id="venta-cantidad" class="form-control" placeholder="Ej. 100">
+                                </div>
+                                <div class="mb-4">
+                                    <label class="form-label fw-bold">Kiosco de Entrega cercano</label>
+                                    <select id="venta-kiosco" class="form-select">
+                                        <option value="Kiosco Central">Kiosco Central</option>
+                                        <option value="Kiosco Norte">Kiosco Norte</option>
+                                        <option value="Kiosco Sur">Kiosco Sur</option>
+                                    </select>
+                                </div>
+                                <button onclick="procesarVenta()" class="btn btn-success w-100 fw-bold">Confirmar Ofrecimiento</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 
