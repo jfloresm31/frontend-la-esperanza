@@ -6,7 +6,9 @@ let carritoProductos = [];
 let carritoVentas = [];    
 let productosCache = [];   
 
+// ==========================================
 // 1. LOGIN Y NAVEGACIÓN
+// ==========================================
 async function iniciarSesion() {
     const correo = document.getElementById('login-correo').value;
     const password = document.getElementById('login-pass').value;
@@ -52,7 +54,7 @@ function regresarAlMenu() {
 }
 
 // ==========================================
-// NUEVO: SISTEMA DE RASTREO Y MULTAS
+// 2. SISTEMA DE RASTREO, MULTAS Y EDICIÓN
 // ==========================================
 function abrirMisPedidos() {
     document.getElementById('seccion-seleccion-actividad').classList.add('oculto');
@@ -91,12 +93,14 @@ async function cargarMisPedidos() {
                     </div>
                     <p class="mb-1 text-dark small"><strong>📍 Ubicación actual:</strong> ${ped.ubicacion}</p>
                     <p class="mb-1 text-muted small"><strong>Pago:</strong> ${ped.metodo_pago}</p>
+                    <p class="mb-1 text-muted small"><strong>Envío:</strong> <span class="fw-bold text-dark">${ped.tipo_entrega}</span></p>
                     
-                    ${parseFloat(ped.multa) > 0 ? `<div class="alert alert-danger p-2 mt-2 mb-0 small"><strong>⚠️ Multa aplicada:</strong> Q. ${parseFloat(ped.multa).toFixed(2)} por gastos operativos de cancelación.</div>` : ''}
+                    ${parseFloat(ped.multa) > 0 ? `<div class="alert alert-danger p-2 mt-2 mb-0 small"><strong>⚠️ Multa aplicada:</strong> Q. ${parseFloat(ped.multa).toFixed(2)} por gastos logísticos.</div>` : ''}
                     
-                    ${!esCancelado ? `
-                        <div class="mt-3 border-top pt-2 text-end">
-                            <button onclick="cancelarPedido(${ped.id_pedido})" class="btn btn-sm btn-outline-danger fw-bold">❌ Cancelar Pedido (Multa Q.25)</button>
+                    ${!esCancelado && ped.estado === 'Preparando' ? `
+                        <div class="mt-3 border-top pt-3 d-flex justify-content-end gap-2">
+                            <button onclick="editarPedido(${ped.id_pedido})" class="btn btn-sm btn-outline-primary fw-bold">✏️ Editar Envío</button>
+                            <button onclick="cancelarPedido(${ped.id_pedido})" class="btn btn-sm btn-outline-danger fw-bold">❌ Cancelar (Multa Q.25)</button>
                         </div>
                     ` : ''}
                 </div>
@@ -120,15 +124,48 @@ async function cancelarPedido(idPedido) {
         
         if(respuesta.ok) {
             alert(data.mensaje);
-            cargarMisPedidos(); // Recargar la lista para mostrar el estado "Cancelado" y la multa
+            cargarMisPedidos(); 
         } else {
             alert("No se pudo cancelar el pedido en este momento.");
         }
     } catch(e) { alert("Error de red."); }
 }
 
+async function editarPedido(idPedido) {
+    const nuevoEnvio = prompt("Has elegido Editar tu Pedido.\n\n¿Cómo deseas recibir tu pedido ahora?\nEscribe 'Domicilio' o 'Kiosco':");
+    
+    if(!nuevoEnvio) return; 
+    
+    let tipoFinal = '';
+    if(nuevoEnvio.toLowerCase().includes('domicilio')) {
+        tipoFinal = 'A Domicilio';
+    } else if(nuevoEnvio.toLowerCase().includes('kiosco')) {
+        tipoFinal = 'Retiro en Kiosco';
+    } else {
+        return alert("⚠️ Opción no válida. Debes escribir exactamente la palabra 'Domicilio' o 'Kiosco'.");
+    }
+
+    try {
+        const respuesta = await fetch(`${API_URL}/api/editar-pedido`, {
+            method: 'POST', 
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ id_pedido: idPedido, nuevo_tipo_entrega: tipoFinal })
+        });
+        const data = await respuesta.json();
+        
+        if(respuesta.ok) {
+            alert("✅ " + data.mensaje);
+            cargarMisPedidos(); 
+        } else {
+            alert("No se pudo editar el pedido en este momento.");
+        }
+    } catch(e) { 
+        alert("Error de conexión al intentar editar."); 
+    }
+}
+
 // ==========================================
-// COMPRAS Y VENTAS (Integradas al Carrito)
+// 3. COMPRAS Y VENTAS (Integradas al Carrito)
 // ==========================================
 async function cargarCatalogo() {
     const contenedor = document.getElementById('catalogo-productos');
@@ -191,7 +228,6 @@ function prepararPasoCompraEntrega() {
     document.getElementById('seccion-tipo-entrega-venta').classList.remove('oculto');
 }
 
-// Ventas
 function inicializarFormularioVentas() {
     const sel = document.getElementById('venta-producto');
     sel.innerHTML = '';
