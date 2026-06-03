@@ -24,10 +24,9 @@
         .btn-figma-actividad { position: relative; z-index: 2; background-color: var(--color-verde-figma); color: #ffffff; border: none; width: 90%; padding: 0.9rem 1rem; font-size: 1.1rem; font-weight: 500; margin: 0.5rem 0; transition: 0.2s; border-radius: 8px; }
         .btn-figma-actividad:hover { background-color: #0b7a44; color: #ffffff; }
         
-        .opcion-entrega-row { background-color: var(--color-verde-figma); color: #ffffff; display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem; border-radius: 4px; cursor: pointer; border: 3px solid transparent; }
+        .opcion-entrega-row { background-color: var(--color-verde-figma); color: #ffffff; display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem; border-radius: 4px; cursor: pointer; border: 3px solid transparent; padding: 1.5rem 1rem; }
         .opcion-entrega-row.seleccionada { border-color: var(--color-principal); box-shadow: 0 0 12px rgba(27,67,50,0.35); transform: scale(1.02); }
-        .opcion-entrega-texto { font-size: 1.2rem; font-weight: 600; padding-left: 1.2rem; }
-        .opcion-entrega-img { width: 95px; height: 65px; object-fit: cover; }
+        .opcion-entrega-texto { font-size: 1.2rem; font-weight: 600; text-align: center; width: 100%; }
         
         .btn-flotante-carrito { position: fixed; bottom: 25px; right: 25px; background-color: var(--color-verde-figma); color: white; border: none; border-radius: 50px; padding: 15px 25px; font-weight: 600; box-shadow: 0 4px 15px rgba(15, 157, 88, 0.4); z-index: 1000; display: flex; align-items: center; gap: 10px; }
     </style>
@@ -36,7 +35,7 @@
 
     <nav class="navbar navbar-esperanza shadow-sm sticky-top">
         <div class="container">
-            <span class="navbar-brand navbar-brand-custom mb-0 h1">🌾 La Esperanza</span>
+            <span class="navbar-brand navbar-brand-custom mb-0 h1"> La Esperanza</span>
             <div id="nav-usuario" class="oculto d-flex align-items-center">
                 <span id="nombre-usuario" class="me-3 fw-medium text-dark small d-none d-md-inline"></span>
                 <button onclick="cerrarSesion()" class="btn btn-sm btn-outline-danger">Salir</button>
@@ -45,12 +44,11 @@
     </nav>
 
     <button id="btn-flotante-ver-carrito" class="btn-flotante-carrito oculto" onclick="irAlCarritoPestaña()">
-        🛒 Carrito <span id="badge-flotante-conteo" class="badge bg-white text-dark rounded-circle px-2 py-1">0</span>
+         Carrito <span id="badge-flotante-conteo" class="badge bg-white text-dark rounded-circle px-2 py-1">0</span>
     </button>
 
     <div class="container mt-4 mb-5">
         
-        <!-- PANTALLA 1: LOGIN -->
         <div id="seccion-login" class="row justify-content-center my-5">
             <div class="col-md-5 col-lg-4">
                 <div class="card-custom p-4 p-sm-5 shadow-sm">
@@ -69,21 +67,20 @@
             </div>
         </div>
 
-        <!-- PANTALLA 2: SELECCIÓN DE ACTIVIDAD (MENÚ PRINCIPAL) -->
         <div id="seccion-seleccion-actividad" class="oculto">
             <div class="contenedor-movil">
                 <div class="encabezado-actividad">MENÚ PRINCIPAL</div>
                 <div class="cuerpo-actividad">
                     <div class="w-100 text-center" style="position: relative; z-index: 2;">
-                        <button class="btn-figma-actividad w-100" onclick="seleccionarActividad('comprar')">🛒 Comprar Insumos</button>
-                        <button class="btn-figma-actividad w-100" onclick="seleccionarActividad('vender')">🚜 Vender Cosecha</button>
+                        <button class="btn-figma-actividad w-100" onclick="seleccionarActividad('comprar')"> Comprar Insumos</button>
+                        <button class="btn-figma-actividad w-100" onclick="seleccionarActividad('vender')"> Vender Cosecha</button>
                         <hr class="text-white my-4">
-                        <button class="btn-figma-actividad w-100" style="background-color: #2c3e50;" onclick="abrirMisPedidos()">📦 Historial y Gestión de Entregas</button>                    </div>
+                        <button class="btn-figma-actividad w-100" style="background-color: #2c3e50;" onclick="abrirMisPedidos()"> Historial y Gestión de Entregas</button>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- PANTALLA 3: MIS PEDIDOS (RASTREO Y MULTAS) -->
         <div id="seccion-mis-pedidos" class="oculto">
             <div class="row justify-content-center">
                 <div class="col-md-8 col-lg-6">
@@ -91,46 +88,39 @@
                         <button class="btn btn-sm btn-outline-secondary" onclick="regresarAlMenuDesdePedidos()">← Volver al Menú</button>
                     </div>
                     <div class="card-custom p-4 shadow-sm">
-                        <h4 class="fw-bold mb-3" style="color: var(--color-principal);">Gestión de Pedidos</h4>
-                        <p class="text-muted small">Rastrea la ubicación de tu entrega o cancela tu pedido (Aplica multa operativa).</p>
-                        <div id="lista-mis-pedidos">
-                            <p class="text-center text-muted mt-4">Cargando información de rastreo...</p>
-                        </div>
+                        <h4 class="fw-bold mb-3" style="color: var(--color-principal);">Gestión de Entregas</h4>
+                        <p class="text-muted small">Rastrea la ubicación de tu entrega, edítala o cancélala.</p>
+                        <div id="lista-mis-pedidos"></div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- PANTALLA 4: PANEL CENTRAL DE COMPRAS Y VENTAS -->
         <div id="seccion-panel" class="oculto">
             <div class="mb-4" id="bloque-regresar-menu">
                 <button class="btn btn-sm btn-outline-secondary" onclick="regresarAlMenu()">← Volver al Menú</button>
             </div>
 
-            <!-- TAB COMPRAR -->
             <div id="tab-comprar" class="oculto">
                 <h4 class="fw-bold mb-4" style="color: var(--color-principal);">Catálogo de Productos</h4>
                 <div class="row g-3" id="catalogo-productos"></div>
             </div>
 
-            <!-- VISTA CARRITO -->
             <div id="tab-carrito-pantalla-aparte" class="oculto">
                 <div class="row justify-content-center">
                     <div class="col-md-8 col-lg-6 card-custom p-4 shadow-sm">
                         <button class="btn btn-sm btn-link text-muted p-0 text-decoration-none mb-3" onclick="regresarAlCatalogo()">← Seguir comprando</button>
-                        <h4 class="fw-bold border-bottom pb-2">Detalle de Compra</h4>
+                        <h4 class="fw-bold border-bottom pb-2">Tu Carrito</h4>
                         <div id="items-carrito-visual" class="mb-4 mt-3"></div>
                         <div class="d-flex justify-content-between align-items-center pt-2 border-top mb-4">
-                            <span class="fw-bold fs-5">Total a Pagar</span>
+                            <span class="fw-bold fs-5">Subtotal Estimado</span>
                             <span id="total-carrito" class="fw-bold text-success fs-4">Q. 0.00</span>
                         </div>
-                        <select id="metodo-pago" class="form-select mb-3"><option value="Efectivo">Efectivo contra entrega</option></select>
-                        <button onclick="prepararPasoCompraEntrega()" class="btn-principal w-100">Confirmar Método de Entrega →</button>
+                        <button onclick="prepararPasoCompraEntrega()" class="btn-principal w-100">Siguiente: Método de Entrega →</button>
                     </div>
                 </div>
             </div>
             
-            <!-- TAB VENDER (Resumido para la vista) -->
             <div id="tab-vender" class="oculto">
                 <div class="row justify-content-center">
                     <div class="col-md-8 col-lg-6 card-custom p-4 shadow-sm">
@@ -149,10 +139,9 @@
             </div>
         </div>
 
-        <!-- PANTALLA 5: TIPO DE ENTREGA -->
         <div id="seccion-tipo-entrega-venta" class="oculto">
             <div class="contenedor-movil">
-                <div class="encabezado-actividad">TIPO DE ENTREGA</div>
+                <div class="encabezado-actividad">MÉTODO DE ENTREGA</div>
                 <div class="flex-grow-1 bg-light p-4">
                     <div id="opcion-domicilio" class="opcion-entrega-row seleccionada" onclick="seleccionarMetodoEntregaVenta('Domicilio')">
                         <div class="opcion-entrega-texto">DOMICILIO</div>
@@ -160,21 +149,53 @@
                     <div id="opcion-puntoventa" class="opcion-entrega-row" onclick="seleccionarMetodoEntregaVenta('Punto de Venta')">
                         <div class="opcion-entrega-texto">KIOSCO FÍSICO</div>
                     </div>
-                    <div id="alerta-entrega-venta" class="mt-4 text-center"></div>
-                    <button class="btn-principal w-100 mt-2 py-3" onclick="confirmarFlujoFinal()">FINALIZAR PROCESO</button>
+                    <button class="btn-principal w-100 mt-4 py-3 shadow-sm fs-5" onclick="mostrarResumenPedido()">Siguiente: Revisar Orden →</button>
                     <div class="text-center mt-3"><button class="btn btn-link text-muted text-decoration-none" onclick="regresarDesdeEntrega()">← Cancelar</button></div>
                 </div>
             </div>
         </div>
 
-        <!-- PANTALLA 6: ÉXITO -->
+        <div id="seccion-resumen-pedido" class="oculto">
+            <div class="contenedor-movil">
+                <div class="encabezado-actividad" style="background-color: #2c3e50;">RESUMEN DE LA ORDEN</div>
+                <div class="p-4 flex-grow-1 bg-light">
+                    
+                    <div class="card-custom p-3 shadow-sm mb-3 border-top border-4 border-success">
+                        <h6 class="fw-bold text-muted mb-3 border-bottom pb-2"> DETALLE DE ARTÍCULOS</h6>
+                        <div id="lista-resumen-items" class="small mb-2 text-dark"></div>
+                        <div class="d-flex justify-content-between fw-bold fs-5 mt-3 pt-2 border-top">
+                            <span id="label-total-resumen">Total:</span>
+                            <span id="valor-total-resumen" class="text-success">Q. 0.00</span>
+                        </div>
+                    </div>
+                    
+                    <div class="card-custom p-3 shadow-sm mb-4">
+                        <h6 class="fw-bold text-muted mb-2 border-bottom pb-2"> DATOS DE LOGÍSTICA</h6>
+                        <p class="mb-1 small"><strong>Operación:</strong> <span id="resumen-tipo-op" class="text-dark"></span></p>
+                        <p class="mb-1 small"><strong>Entrega:</strong> <span id="resumen-metodo-entrega" class="text-dark"></span></p>
+                        <p class="mb-0 small"><strong>Pago:</strong> <span id="resumen-pago" class="text-dark fw-bold"></span></p>
+                    </div>
+
+                    <div id="alerta-resumen"></div>
+                    <button class="btn-principal w-100 py-3 mb-3 fw-bold fs-5 shadow-sm" style="background-color: var(--color-verde-figma);" onclick="confirmarFlujoFinal()">✅ CONFIRMAR PEDIDO</button>
+                    <div class="text-center">
+                        <button class="btn btn-link text-muted text-decoration-none" onclick="regresarDesdeResumen()">← Volver y editar entrega</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div id="seccion-compra-exitosa" class="oculto">
             <div class="contenedor-movil">
                 <div class="encabezado-actividad" style="background-color: var(--color-principal);">¡COMPLETADO!</div>
-                <div class="p-4 text-center flex-grow-1 d-flex flex-column justify-content-center">
-                    <h5 id="titulo-exito" class="fw-bold text-success mb-3">Procesado con éxito</h5>
-                    <div id="token-exito" class="fw-bold fs-1 text-dark mb-4 p-3 bg-light border border-2 border-success rounded">------</div>
-                    <button class="btn-principal w-100" onclick="regresarAlMenuDesdeExito()">Volver al Inicio</button>
+                <div class="p-4 text-center flex-grow-1 d-flex flex-column justify-content-center bg-white">
+                    <h4 id="titulo-exito" class="fw-bold text-success mb-2">Procesado con éxito</h4>
+                    <p class="text-muted small mb-4">Presenta este código en caja o al repartidor para validar tu transacción.</p>
+                    <div class="bg-light border border-2 border-success rounded-3 py-4 mb-4 shadow-sm">
+                        <span class="text-muted small fw-bold d-block mb-1">CÓDIGO DE PEDIDO</span>
+                        <div id="token-exito" class="fw-bold fs-1 text-dark" style="letter-spacing: 2px;">------</div>
+                    </div>
+                    <button class="btn-principal w-100 py-3" onclick="regresarAlMenuDesdeExito()">Volver al Inicio</button>
                 </div>
             </div>
         </div>

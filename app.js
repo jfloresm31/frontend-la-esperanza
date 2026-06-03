@@ -86,7 +86,7 @@ async function cargarMisPedidos() {
             const colorEstado = esCancelado ? 'danger' : (ped.estado === 'Entregado' ? 'success' : 'primary');
             
             contenedor.innerHTML += `
-                <div class="border rounded p-3 mb-3 bg-white" style="border-left: 5px solid var(--bs-${colorEstado}) !important;">
+                <div class="border rounded p-3 mb-3 bg-white shadow-sm" style="border-left: 5px solid var(--bs-${colorEstado}) !important;">
                     <div class="d-flex justify-content-between mb-2">
                         <span class="badge bg-${colorEstado}">${ped.estado}</span>
                         <span class="text-muted small fw-bold">ID: ${ped.token_digital}</span>
@@ -95,7 +95,7 @@ async function cargarMisPedidos() {
                     <p class="mb-1 text-muted small"><strong>Pago:</strong> ${ped.metodo_pago}</p>
                     <p class="mb-1 text-muted small"><strong>Envío:</strong> <span class="fw-bold text-dark">${ped.tipo_entrega}</span></p>
                     
-                    ${parseFloat(ped.multa) > 0 ? `<div class="alert alert-danger p-2 mt-2 mb-0 small"><strong>⚠️ Multa aplicada:</strong> Q. ${parseFloat(ped.multa).toFixed(2)} por gastos logísticos.</div>` : ''}
+                    ${parseFloat(ped.multa) > 0 ? `<div class="alert alert-danger p-2 mt-2 mb-0 small"><strong>⚠️ Multa aplicada:</strong> Q. ${parseFloat(ped.multa).toFixed(2)} por logística.</div>` : ''}
                     
                     ${!esCancelado && ped.estado === 'Preparando' ? `
                         <div class="mt-3 border-top pt-3 d-flex justify-content-end gap-2">
@@ -112,7 +112,7 @@ async function cargarMisPedidos() {
 }
 
 async function cancelarPedido(idPedido) {
-    const confirmar = confirm("🚨 ATENCIÓN: Al cancelar el pedido el camión regresará a bodega. Se aplicará una multa automática de Q. 25.00 a su estado de cuenta. ¿Desea continuar?");
+    const confirmar = confirm("🚨 ATENCIÓN: Al cancelar el pedido se aplicará una multa automática de Q. 25.00 a su estado de cuenta. ¿Desea continuar?");
     if(!confirmar) return;
 
     try {
@@ -121,51 +121,32 @@ async function cancelarPedido(idPedido) {
             body: JSON.stringify({ id_pedido: idPedido })
         });
         const data = await respuesta.json();
-        
-        if(respuesta.ok) {
-            alert(data.mensaje);
-            cargarMisPedidos(); 
-        } else {
-            alert("No se pudo cancelar el pedido en este momento.");
-        }
+        if(respuesta.ok) { alert(data.mensaje); cargarMisPedidos(); } 
+        else { alert("No se pudo cancelar."); }
     } catch(e) { alert("Error de red."); }
 }
 
 async function editarPedido(idPedido) {
-    const nuevoEnvio = prompt("Has elegido Editar tu Pedido.\n\n¿Cómo deseas recibir tu pedido ahora?\nEscribe 'Domicilio' o 'Kiosco':");
-    
+    const nuevoEnvio = prompt("Editar Pedido.\n¿Cómo deseas recibir tu pedido?\nEscribe 'Domicilio' o 'Kiosco':");
     if(!nuevoEnvio) return; 
-    
     let tipoFinal = '';
-    if(nuevoEnvio.toLowerCase().includes('domicilio')) {
-        tipoFinal = 'A Domicilio';
-    } else if(nuevoEnvio.toLowerCase().includes('kiosco')) {
-        tipoFinal = 'Retiro en Kiosco';
-    } else {
-        return alert("⚠️ Opción no válida. Debes escribir exactamente la palabra 'Domicilio' o 'Kiosco'.");
-    }
+    if(nuevoEnvio.toLowerCase().includes('domicilio')) tipoFinal = 'A Domicilio';
+    else if(nuevoEnvio.toLowerCase().includes('kiosco')) tipoFinal = 'Retiro en Kiosco';
+    else return alert("⚠️ Opción no válida.");
 
     try {
         const respuesta = await fetch(`${API_URL}/api/editar-pedido`, {
-            method: 'POST', 
-            headers: { 'Content-Type': 'application/json' },
+            method: 'POST', headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ id_pedido: idPedido, nuevo_tipo_entrega: tipoFinal })
         });
         const data = await respuesta.json();
-        
-        if(respuesta.ok) {
-            alert("✅ " + data.mensaje);
-            cargarMisPedidos(); 
-        } else {
-            alert("No se pudo editar el pedido en este momento.");
-        }
-    } catch(e) { 
-        alert("Error de conexión al intentar editar."); 
-    }
+        if(respuesta.ok) { alert("✅ " + data.mensaje); cargarMisPedidos(); } 
+        else { alert("No se pudo editar."); }
+    } catch(e) { alert("Error de conexión."); }
 }
 
 // ==========================================
-// 3. COMPRAS Y VENTAS (Integradas al Carrito)
+// 3. COMPRAS Y VENTAS
 // ==========================================
 async function cargarCatalogo() {
     const contenedor = document.getElementById('catalogo-productos');
@@ -239,7 +220,7 @@ function agregarProductoALaVenta() {
     const cant = document.getElementById('venta-cantidad').value;
     const nombre = document.getElementById('venta-producto').options[document.getElementById('venta-producto').selectedIndex].text;
     carritoVentas.push({ id_producto: id, cantidad: cant, nombre: nombre });
-    document.getElementById('lista-productos-venta').innerHTML += `<p class="small mb-1">✅ ${cant}x ${nombre}</p>`;
+    document.getElementById('lista-productos-venta').innerHTML += `<p class="small mb-1 text-success fw-bold">✅ ${cant}x ${nombre}</p>`;
     document.getElementById('venta-cantidad').value = '';
 }
 
@@ -261,7 +242,54 @@ function regresarDesdeEntrega() {
     document.getElementById('seccion-panel').classList.remove('oculto');
 }
 
+// ==========================================
+// 4. NUEVO: FLUJO DE RESUMEN Y CONFIRMACIÓN
+// ==========================================
+function mostrarResumenPedido() {
+    document.getElementById('seccion-tipo-entrega-venta').classList.add('oculto');
+    document.getElementById('seccion-resumen-pedido').classList.remove('oculto');
+
+    const listaItems = document.getElementById('lista-resumen-items');
+    const labelTotal = document.getElementById('label-total-resumen');
+    const valorTotal = document.getElementById('valor-total-resumen');
+    
+    document.getElementById('resumen-metodo-entrega').innerText = metodoEntregaSeleccionado;
+    listaItems.innerHTML = '';
+    let total = 0;
+
+    if (modoActual === 'COMPRA') {
+        document.getElementById('resumen-tipo-op').innerText = 'Adquisición de Insumos';
+        document.getElementById('resumen-pago').innerText = 'Efectivo contra entrega';
+        labelTotal.innerText = 'Total a Pagar:';
+
+        carritoProductos.forEach(i => {
+            const sub = i.precio_unitario * i.cantidad;
+            total += sub;
+            listaItems.innerHTML += `<div class="d-flex justify-content-between mb-2 pb-1 border-bottom border-light"><span><span class="text-muted">${i.cantidad}x</span> ${i.nombre}</span><span class="fw-bold">Q. ${sub.toFixed(2)}</span></div>`;
+        });
+        valorTotal.innerText = `Q. ${total.toFixed(2)}`;
+        valorTotal.className = 'text-success fw-bold fs-4';
+    } else {
+        document.getElementById('resumen-tipo-op').innerText = 'Ofrecimiento de Cosecha';
+        document.getElementById('resumen-pago').innerText = 'Pago sujeto a calidad en Kiosco';
+        labelTotal.innerText = 'Total:';
+
+        carritoVentas.forEach(i => {
+            listaItems.innerHTML += `<div class="mb-1 text-dark">• <span class="fw-bold">${i.cantidad}x</span> ${i.nombre}</div>`;
+        });
+        valorTotal.innerText = 'Pendiente de Avalúo';
+        valorTotal.className = 'text-primary fw-bold fs-6';
+    }
+}
+
+function regresarDesdeResumen() {
+    document.getElementById('seccion-resumen-pedido').classList.add('oculto');
+    document.getElementById('seccion-tipo-entrega-venta').classList.remove('oculto');
+}
+
 async function confirmarFlujoFinal() {
+    document.getElementById('alerta-resumen').innerHTML = '<div class="alert alert-info py-2 text-center small fw-bold">Procesando orden de forma segura... ⏳</div>';
+
     const payload = modoActual === 'COMPRA' ? 
         { id_cliente: usuarioActual.id_cliente, tipo_entrega: metodoEntregaSeleccionado, metodo_pago: 'Efectivo', carrito: carritoProductos } :
         { id_cliente: usuarioActual.id_cliente, kiosco_entrega: 'Central', metodo_recepcion: metodoEntregaSeleccionado, productos: carritoVentas };
@@ -274,12 +302,17 @@ async function confirmarFlujoFinal() {
         });
         const data = await res.json();
         if(res.ok) {
-            document.getElementById('seccion-tipo-entrega-venta').classList.add('oculto');
+            document.getElementById('seccion-resumen-pedido').classList.add('oculto');
             document.getElementById('seccion-compra-exitosa').classList.remove('oculto');
             document.getElementById('token-exito').innerText = data.token;
+            document.getElementById('alerta-resumen').innerHTML = '';
             carritoProductos = []; carritoVentas = [];
-        } else { alert("Error procesando solicitud"); }
-    } catch(e) { alert("Error de red"); }
+        } else { 
+            document.getElementById('alerta-resumen').innerHTML = '<div class="alert alert-danger py-2 text-center small">No se pudo procesar. Verifique el inventario.</div>';
+        }
+    } catch(e) { 
+        document.getElementById('alerta-resumen').innerHTML = '<div class="alert alert-danger py-2 text-center small">Error de red.</div>'; 
+    }
 }
 
 function regresarAlMenuDesdeExito() {
