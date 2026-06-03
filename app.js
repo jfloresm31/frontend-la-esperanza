@@ -184,6 +184,8 @@ async function cargarCatalogo() {
                         <p class="text-success fw-bold mb-1">Q. ${parseFloat(prod.precio_unitario).toFixed(2)}</p>
                         <p class="small text-muted mb-2">Stock: ${prod.stock_disponible}</p>
                         <div class="mt-auto">
+                            <!-- Aquí regresamos el cuadro de cantidad -->
+                            <input type="number" id="cant-${prod.id_producto}" class="form-control form-control-sm mb-2 text-center fw-bold" value="1" min="1" max="${prod.stock_disponible}">
                             <button onclick="agregarAlCarrito(${prod.id_producto})" class="btn btn-sm btn-success w-100 fw-bold">🛒 Agregar</button>
                         </div>
                     </div>
@@ -193,16 +195,35 @@ async function cargarCatalogo() {
 }
 
 function agregarAlCarrito(id) {
+    const inputCantidad = document.getElementById(`cant-${id}`);
+    const cant = parseInt(inputCantidad.value);
+    
+    if(isNaN(cant) || cant <= 0) return alert("Ingresa una cantidad válida.");
+
     const prod = productosCache.find(p => p.id_producto === id);
     const item = carritoProductos.find(i => i.id_producto === id);
+    
     if(item) {
-        if(item.cantidad < prod.stock_disponible) item.cantidad += 1;
-        else alert("Stock máximo alcanzado");
+        if((item.cantidad + cant) <= prod.stock_disponible) {
+            item.cantidad += cant;
+        } else {
+            return alert(`Solo hay ${prod.stock_disponible} en stock.`);
+        }
     } else {
-        carritoProductos.push({ ...prod, cantidad: 1, imagen: obtenerImagen(prod.nombre) });
+        if(cant <= prod.stock_disponible) {
+            carritoProductos.push({ ...prod, cantidad: cant, imagen: obtenerImagen(prod.nombre) });
+        } else {
+            return alert(`Solo hay ${prod.stock_disponible} en stock.`);
+        }
     }
+    
     document.getElementById('badge-flotante-conteo').innerText = carritoProductos.length;
-    alert("Producto agregado al carrito");
+    inputCantidad.value = 1; // Reinicia el cuadrito a 1 después de agregar
+    
+    // Animación del botón flotante
+    const btnFlotante = document.getElementById('btn-flotante-ver-carrito');
+    btnFlotante.style.transform = 'scale(1.2)';
+    setTimeout(() => btnFlotante.style.transform = 'scale(1)', 200);
 }
 
 // NUEVO: Función para editar cantidades dentro del carrito

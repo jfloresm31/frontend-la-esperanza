@@ -105,14 +105,17 @@
             </div>
         </div>
 
+<!-- PANTALLA 2: SELECCIÓN -->
         <div id="seccion-seleccion-actividad" class="oculto">
             <div class="contenedor-movil">
                 <div class="encabezado-actividad">MENÚ PRINCIPAL</div>
-                <div class="p-5 text-center bg-light flex-grow-1">
-                    <button class="btn-figma-actividad w-100 py-3 mb-3" onclick="seleccionarActividad('comprar')">🛒 Comprar Insumos</button>
-                    <button class="btn-figma-actividad w-100 py-3 mb-4" onclick="seleccionarActividad('vender')">🚜 Vender Cosecha</button>
-                    <hr>
-                    <button class="btn-figma-actividad w-100 py-3 mt-3" style="background-color: #2c3e50;" onclick="abrirMisPedidos()">📦 Mis Pedidos y Rastreo</button>
+                <div class="cuerpo-actividad">
+                    <div class="w-100 text-center" style="position: relative; z-index: 2;">
+                        <button class="btn-figma-actividad w-100 py-3 mb-3" onclick="seleccionarActividad('comprar')">🛒 Comprar Insumos</button>
+                        <button class="btn-figma-actividad w-100 py-3 mb-4" onclick="seleccionarActividad('vender')">🚜 Vender Cosecha</button>
+                        <hr class="text-white my-4">
+                        <button class="btn-figma-actividad w-100 py-3 mt-3" style="background-color: #2c3e50;" onclick="abrirMisPedidos()">📦 Mis Pedidos y Rastreo</button>
+                    </div>
                 </div>
             </div>
         </div>
