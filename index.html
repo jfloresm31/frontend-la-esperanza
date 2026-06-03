@@ -15,21 +15,33 @@
         .oculto { display: none !important; }
         .card-custom { background: #ffffff; border: 1px solid var(--borde-suave); border-radius: 12px; }
         
-        .login-fondo-agricola { background-image: linear-gradient(rgba(27, 67, 50, 0.7), rgba(15, 157, 88, 0.5)), url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?q=80&w=1920&auto=format&fit=crop'); background-size: cover; background-position: center; border-radius: 24px; padding: 6rem 1rem; box-shadow: 0 15px 35px rgba(0,0,0,0.2); margin-top: 1rem !important; }
+        /* Efectos Visuales y Fondos */
+        .login-fondo-agricola { background-image: linear-gradient(rgba(27, 67, 50, 0.75), rgba(15, 157, 88, 0.6)), url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?q=80&w=1920&auto=format&fit=crop'); background-size: cover; background-position: center; border-radius: 24px; padding: 4rem 1rem; box-shadow: 0 15px 35px rgba(0,0,0,0.2); margin-top: 1rem !important; min-height: 75vh; align-items: center; }
         .tarjeta-login-glass { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); border-radius: 20px; }
+        
+        /* Formularios y Botones */
         .form-label-custom { font-weight: 500; font-size: 0.875rem; margin-bottom: 0.5rem; }
         .form-control-custom { border: 1px solid #ced4da; border-radius: 8px; padding: 0.6rem 0.75rem; }
-        
-        .btn-principal { background-color: var(--color-principal); color: #ffffff; font-weight: 600; border-radius: 8px; padding: 0.6rem 1.2rem; border: none; }
+        .btn-principal { background-color: var(--color-principal); color: #ffffff; font-weight: 600; border-radius: 8px; padding: 0.6rem 1.2rem; border: none; transition: 0.2s; }
         .btn-principal:hover { background-color: #123024; color: white;}
+        
+        /* Contenedores Genéricos */
         .contenedor-movil { max-width: 420px; margin: 2rem auto; background: #ffffff; border-radius: 24px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.08); border: 1px solid var(--borde-suave); display: flex; flex-direction: column; min-height: 580px;}
         .encabezado-actividad { background-color: var(--color-verde-figma); color: #ffffff; text-align: center; padding: 1.5rem 1rem; font-weight: 600; text-transform: uppercase; }
-        .btn-figma-actividad { background-color: var(--color-verde-figma); color: #ffffff; border: none; width: 90%; padding: 0.9rem 1rem; font-size: 1.1rem; font-weight: 500; margin: 0.5rem 0; border-radius: 8px; }
         
+        /* NUEVO DISEÑO: Tarjetas del Menú Principal */
+        .menu-option-card { display: flex; align-items: center; background: #ffffff; border: 1px solid var(--borde-suave); border-radius: 14px; padding: 1rem 1.2rem; cursor: pointer; transition: all 0.2s ease; text-decoration: none; }
+        .menu-option-card:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0,0,0,0.08) !important; border-color: var(--color-secundario); }
+        .menu-icon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; flex-shrink: 0; }
+        
+        /* Opciones de Entrega */
         .opcion-entrega-row { background-color: var(--color-verde-figma); color: #ffffff; display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.5rem; border-radius: 4px; cursor: pointer; border: 3px solid transparent; padding: 1.5rem 1rem; }
         .opcion-entrega-row.seleccionada { border-color: var(--color-principal); box-shadow: 0 0 12px rgba(27,67,50,0.35); transform: scale(1.02); }
         .opcion-entrega-texto { font-size: 1.2rem; font-weight: 600; text-align: center; width: 100%; }
-        .btn-flotante-carrito { position: fixed; bottom: 25px; right: 25px; background-color: var(--color-verde-figma); color: white; border: none; border-radius: 50px; padding: 15px 25px; font-weight: 600; box-shadow: 0 4px 15px rgba(15, 157, 88, 0.4); z-index: 1000; display: flex; align-items: center; gap: 10px; }
+        
+        /* Botón Flotante Carrito */
+        .btn-flotante-carrito { position: fixed; bottom: 25px; right: 25px; background-color: var(--color-verde-figma); color: white; border: none; border-radius: 50px; padding: 15px 25px; font-weight: 600; box-shadow: 0 4px 15px rgba(15, 157, 88, 0.4); z-index: 1000; display: flex; align-items: center; gap: 10px; transition: transform 0.2s; }
+        .btn-flotante-carrito:hover { transform: scale(1.05); }
     </style>
 </head>
 <body>
@@ -50,9 +62,11 @@
 
     <div class="container mt-3 mb-5">
         
+        <!-- PANTALLA 1: LOGIN Y REGISTRO -->
         <div id="seccion-login" class="row justify-content-center login-fondo-agricola mx-1 mx-md-0">
             <div class="col-md-7 col-lg-5">
                 
+                <!-- TARJETA LOGIN -->
                 <div class="card-custom p-4 p-sm-5 shadow-lg tarjeta-login-glass" id="tarjeta-login">
                     <div class="text-center mb-4">
                         <span style="font-size: 3rem;">🌾</span>
@@ -76,6 +90,7 @@
                     </div>
                 </div>
 
+                <!-- TARJETA REGISTRO -->
                 <div class="card-custom p-4 p-sm-5 shadow-lg tarjeta-login-glass oculto" id="tarjeta-registro">
                     <div class="text-center mb-3">
                         <h4 class="fw-bold mt-2" style="color: var(--color-principal);">Nueva Cuenta</h4>
@@ -105,21 +120,49 @@
             </div>
         </div>
 
-<!-- PANTALLA 2: SELECCIÓN -->
+        <!-- PANTALLA 2: SELECCIÓN DE ACTIVIDAD (PANEL DE CONTROL PROFESIONAL) -->
         <div id="seccion-seleccion-actividad" class="oculto">
-            <div class="contenedor-movil">
-                <div class="encabezado-actividad">MENÚ PRINCIPAL</div>
-                <div class="cuerpo-actividad">
-                    <div class="w-100 text-center" style="position: relative; z-index: 2;">
-                        <button class="btn-figma-actividad w-100 py-3 mb-3" onclick="seleccionarActividad('comprar')">🛒 Comprar Insumos</button>
-                        <button class="btn-figma-actividad w-100 py-3 mb-4" onclick="seleccionarActividad('vender')">🚜 Vender Cosecha</button>
-                        <hr class="text-white my-4">
-                        <button class="btn-figma-actividad w-100 py-3 mt-3" style="background-color: #2c3e50;" onclick="abrirMisPedidos()">📦 Mis Pedidos y Rastreo</button>
+            <div class="row justify-content-center login-fondo-agricola mx-1 mx-md-0">
+                <div class="col-md-7 col-lg-5">
+                    <div class="card-custom p-4 p-sm-5 shadow-lg tarjeta-login-glass text-center">
+                        <h3 class="fw-bold mb-1" style="color: var(--color-principal);">Panel de Control</h3>
+                        <p class="text-muted small mb-4">Selecciona la gestión que deseas realizar</p>
+                        
+                        <!-- Tarjeta Comprar -->
+                        <div class="menu-option-card shadow-sm mb-3" onclick="seleccionarActividad('comprar')">
+                            <div class="menu-icon" style="background-color: #e8f5e9; color: #2e7d32;">🛒</div>
+                            <div class="text-start ms-3">
+                                <h6 class="fw-bold mb-0 text-dark">Adquirir Insumos</h6>
+                                <span class="text-muted" style="font-size: 0.8rem;">Catálogo de semillas y herramientas</span>
+                            </div>
+                            <div class="ms-auto fw-bold fs-5" style="color: var(--color-principal);">→</div>
+                        </div>
+
+                        <!-- Tarjeta Vender -->
+                        <div class="menu-option-card shadow-sm mb-4" onclick="seleccionarActividad('vender')">
+                            <div class="menu-icon" style="background-color: #fff8e1; color: #f57f17;">🚜</div>
+                            <div class="text-start ms-3">
+                                <h6 class="fw-bold mb-0 text-dark">Ofrecer Cosechas</h6>
+                                <span class="text-muted" style="font-size: 0.8rem;">Registra tu producto para Kiosco</span>
+                            </div>
+                            <div class="ms-auto fw-bold fs-5" style="color: var(--color-principal);">→</div>
+                        </div>
+
+                        <!-- Tarjeta Historial -->
+                        <div class="menu-option-card shadow-sm mb-2 border-top border-4" style="border-top-color: #2c3e50 !important;" onclick="abrirMisPedidos()">
+                            <div class="menu-icon" style="background-color: #f1f3f5; color: #495057;">📦</div>
+                            <div class="text-start ms-3">
+                                <h6 class="fw-bold mb-0 text-dark">Gestión de Entregas</h6>
+                                <span class="text-muted" style="font-size: 0.8rem;">Rastreo, multas y edición de envíos</span>
+                            </div>
+                            <div class="ms-auto fw-bold fs-5" style="color: #2c3e50;">→</div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
+        <!-- PANTALLA 3: MIS PEDIDOS -->
         <div id="seccion-mis-pedidos" class="oculto">
             <div class="row justify-content-center">
                 <div class="col-md-8 col-lg-6">
@@ -132,14 +175,17 @@
             </div>
         </div>
 
+        <!-- PANTALLA 4: PANEL CENTRAL -->
         <div id="seccion-panel" class="oculto">
             <button class="btn btn-sm btn-outline-secondary mb-4" id="bloque-regresar-menu" onclick="regresarAlMenu()">← Volver al Menú</button>
 
+            <!-- CATÁLOGO -->
             <div id="tab-comprar" class="oculto">
                 <h4 class="fw-bold mb-4" style="color: var(--color-principal);">Catálogo de Productos</h4>
                 <div class="row g-3" id="catalogo-productos"></div>
             </div>
 
+            <!-- CARRITO EDITABLE -->
             <div id="tab-carrito-pantalla-aparte" class="oculto">
                 <div class="row justify-content-center">
                     <div class="col-md-8 col-lg-6 card-custom p-4 shadow-sm">
@@ -162,6 +208,7 @@
                 </div>
             </div>
             
+            <!-- VENDER -->
             <div id="tab-vender" class="oculto">
                 <div class="row justify-content-center">
                     <div class="col-md-8 col-lg-6 card-custom p-4 shadow-sm">
@@ -176,6 +223,7 @@
             </div>
         </div>
 
+        <!-- PANTALLA 5: TIPO DE ENTREGA -->
         <div id="seccion-tipo-entrega-venta" class="oculto">
             <div class="contenedor-movil">
                 <div class="encabezado-actividad">MÉTODO DE ENTREGA</div>
@@ -207,6 +255,7 @@
             </div>
         </div>
 
+        <!-- PANTALLA 5.5: RESUMEN -->
         <div id="seccion-resumen-pedido" class="oculto">
             <div class="contenedor-movil">
                 <div class="encabezado-actividad" style="background-color: #2c3e50;">RESUMEN DE LA ORDEN</div>
@@ -226,6 +275,7 @@
             </div>
         </div>
 
+        <!-- PANTALLA 6: ÉXITO -->
         <div id="seccion-compra-exitosa" class="oculto">
             <div class="contenedor-movil">
                 <div class="encabezado-actividad">¡COMPLETADO!</div>
