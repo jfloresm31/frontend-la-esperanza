@@ -5,200 +5,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>La Esperanza | Portal Agrícola</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <style>
-        :root {
-            --color-verde-figma: #0f9d58; 
-            --color-principal: #1b4332; 
-            --color-secundario: #40916c;
-            --fondo-gris: #f8f9fa;
-            --texto-oscuro: #212529;
-            --borde-suave: #e9ecef;
-        }
-
-        body { 
-            background-color: var(--fondo-gris); 
-            font-family: 'Inter', sans-serif;
-            color: var(--texto-oscuro);
-        }
-
-        .navbar-esperanza { 
-            background-color: #ffffff; 
-            border-bottom: 1px solid var(--borde-suave);
-            padding: 1rem 0;
-        }
-        .navbar-brand-custom {
-            color: var(--color-principal) !important;
-            font-weight: 700;
-            font-size: 1.4rem;
-        }
-
+        :root { --color-verde-figma: #0f9d58; --color-principal: #1b4332; --color-secundario: #40916c; --fondo-gris: #f8f9fa; --texto-oscuro: #212529; --borde-suave: #e9ecef; }
+        body { background-color: var(--fondo-gris); font-family: 'Inter', sans-serif; color: var(--texto-oscuro); }
+        .navbar-esperanza { background-color: #ffffff; border-bottom: 1px solid var(--borde-suave); padding: 1rem 0; }
+        .navbar-brand-custom { color: var(--color-principal) !important; font-weight: 700; font-size: 1.4rem; }
         .oculto { display: none !important; }
-
-        .card-custom {
-            background: #ffffff;
-            border: 1px solid var(--borde-suave);
-            border-radius: 12px;
-        }
+        .card-custom { background: #ffffff; border: 1px solid var(--borde-suave); border-radius: 12px; }
         
-        /* --- NUEVO ESTILO DE LOGIN (Efecto Cristal y Fondo) --- */
-        .login-fondo-agricola {
-            background-image: linear-gradient(rgba(27, 67, 50, 0.7), rgba(15, 157, 88, 0.5)), url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?q=80&w=1920&auto=format&fit=crop');
-            background-size: cover;
-            background-position: center;
-            border-radius: 24px;
-            padding: 6rem 1rem;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
-            margin-top: 1rem !important;
-        }
-        .tarjeta-login-glass {
-            background: rgba(255, 255, 255, 0.92);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            border-radius: 20px;
-        }
-
-        .form-label-custom {
-            font-weight: 500;
-            font-size: 0.875rem;
-            margin-bottom: 0.5rem;
-        }
-        .form-control-custom {
-            border: 1px solid #ced4da;
-            border-radius: 8px;
-            padding: 0.6rem 0.75rem;
-        }
-
-        .btn-principal {
-            background-color: var(--color-principal);
-            color: #ffffff;
-            font-weight: 600;
-            border-radius: 8px;
-            padding: 0.6rem 1.2rem;
-            border: none;
-            transition: background-color 0.2s;
-        }
-        .btn-principal:hover {
-            background-color: #123024;
-        }
-        .btn-secundario-outline {
-            border: 1px solid var(--color-principal);
-            color: var(--color-principal);
-            background: transparent;
-            font-weight: 500;
-            border-radius: 8px;
-            padding: 0.4rem 1rem;
-        }
-
-        /* --- CONTENEDOR MÓVIL (ESTILO FIGMA) --- */
-        .contenedor-movil {
-            max-width: 420px;
-            margin: 2rem auto;
-            background: #ffffff;
-            border-radius: 24px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-            border: 1px solid var(--borde-suave);
-            position: relative;
-            min-height: 580px;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .encabezado-actividad {
-            background-color: var(--color-verde-figma);
-            color: #ffffff;
-            text-align: center;
-            padding: 1.5rem 1rem;
-            font-weight: 600;
-            font-size: 1.15rem;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
-        }
-
-        .cuerpo-actividad {
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 2rem;
-            background-image: url('https://images.unsplash.com/photo-1545241047-6083a3684587?q=80&w=600&auto=format&fit=crop'); 
-            background-size: cover;
-            background-position: center bottom;
-            position: relative;
-        }
-
-        .cuerpo-actividad::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(255, 255, 255, 0.15); 
-            z-index: 1;
-        }
-
-        .btn-figma-actividad {
-            position: relative;
-            z-index: 2;
-            background-color: var(--color-verde-figma);
-            color: #ffffff;
-            border: none;
-            width: 90%;
-            padding: 0.9rem 1rem;
-            font-size: 1.1rem;
-            font-weight: 500;
-            margin: 0.5rem 0;
-            transition: 0.2s;
-            border-radius: 8px;
-        }
-        .btn-figma-actividad:hover {
-            background-color: #0b7a44;
-            color: #ffffff;
-        }
+        .login-fondo-agricola { background-image: linear-gradient(rgba(27, 67, 50, 0.7), rgba(15, 157, 88, 0.5)), url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?q=80&w=1920&auto=format&fit=crop'); background-size: cover; background-position: center; border-radius: 24px; padding: 6rem 1rem; box-shadow: 0 15px 35px rgba(0,0,0,0.2); margin-top: 1rem !important; }
+        .tarjeta-login-glass { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); border-radius: 20px; }
+        .form-label-custom { font-weight: 500; font-size: 0.875rem; margin-bottom: 0.5rem; }
+        .form-control-custom { border: 1px solid #ced4da; border-radius: 8px; padding: 0.6rem 0.75rem; }
         
-        .opcion-entrega-row {
-            background-color: var(--color-verde-figma);
-            color: #ffffff;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 0.5rem;
-            border-radius: 4px;
-            cursor: pointer;
-            border: 3px solid transparent;
-            padding: 1.5rem 1rem;
-        }
-        .opcion-entrega-row.seleccionada {
-            border-color: var(--color-principal);
-            box-shadow: 0 0 12px rgba(27,67,50,0.35);
-            transform: scale(1.02);
-        }
-        .opcion-entrega-texto {
-            font-size: 1.2rem;
-            font-weight: 600;
-            text-align: center;
-            width: 100%;
-        }
+        .btn-principal { background-color: var(--color-principal); color: #ffffff; font-weight: 600; border-radius: 8px; padding: 0.6rem 1.2rem; border: none; }
+        .btn-principal:hover { background-color: #123024; color: white;}
+        .contenedor-movil { max-width: 420px; margin: 2rem auto; background: #ffffff; border-radius: 24px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.08); border: 1px solid var(--borde-suave); display: flex; flex-direction: column; min-height: 580px;}
+        .encabezado-actividad { background-color: var(--color-verde-figma); color: #ffffff; text-align: center; padding: 1.5rem 1rem; font-weight: 600; text-transform: uppercase; }
+        .btn-figma-actividad { background-color: var(--color-verde-figma); color: #ffffff; border: none; width: 90%; padding: 0.9rem 1rem; font-size: 1.1rem; font-weight: 500; margin: 0.5rem 0; border-radius: 8px; }
         
-        .btn-flotante-carrito {
-            position: fixed;
-            bottom: 25px;
-            right: 25px;
-            background-color: var(--color-verde-figma);
-            color: white;
-            border: none;
-            border-radius: 50px;
-            padding: 15px 25px;
-            font-weight: 600;
-            box-shadow: 0 4px 15px rgba(15, 157, 88, 0.4);
-            z-index: 1000;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
+        .opcion-entrega-row { background-color: var(--color-verde-figma); color: #ffffff; display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.5rem; border-radius: 4px; cursor: pointer; border: 3px solid transparent; padding: 1.5rem 1rem; }
+        .opcion-entrega-row.seleccionada { border-color: var(--color-principal); box-shadow: 0 0 12px rgba(27,67,50,0.35); transform: scale(1.02); }
+        .opcion-entrega-texto { font-size: 1.2rem; font-weight: 600; text-align: center; width: 100%; }
+        .btn-flotante-carrito { position: fixed; bottom: 25px; right: 25px; background-color: var(--color-verde-figma); color: white; border: none; border-radius: 50px; padding: 15px 25px; font-weight: 600; box-shadow: 0 4px 15px rgba(15, 157, 88, 0.4); z-index: 1000; display: flex; align-items: center; gap: 10px; }
     </style>
 </head>
 <body>
@@ -221,7 +52,8 @@
         
         <div id="seccion-login" class="row justify-content-center login-fondo-agricola mx-1 mx-md-0">
             <div class="col-md-7 col-lg-5">
-                <div class="card-custom p-4 p-sm-5 shadow-lg tarjeta-login-glass">
+                
+                <div class="card-custom p-4 p-sm-5 shadow-lg tarjeta-login-glass" id="tarjeta-login">
                     <div class="text-center mb-4">
                         <span style="font-size: 3rem;">🌾</span>
                         <h3 class="fw-bold mt-2" style="color: var(--color-principal);">La Esperanza</h3>
@@ -230,27 +62,57 @@
                     <div id="alerta-login"></div>
                     <div class="mb-3">
                         <label class="form-label-custom text-dark">Correo Electrónico</label>
-                        <input type="email" id="login-correo" class="form-control form-control-custom" value="admin@esperanza.com">
+                        <input type="email" id="login-correo" class="form-control form-control-custom" placeholder="Ej. admin@esperanza.com">
                     </div>
                     <div class="mb-4">
                         <label class="form-label-custom text-dark">Contraseña</label>
-                        <input type="password" id="login-pass" class="form-control form-control-custom" value="123456">
+                        <input type="password" id="login-pass" class="form-control form-control-custom" placeholder="••••••">
                     </div>
-                    <button onclick="iniciarSesion()" class="btn-principal w-100 py-3 shadow-sm fs-5">Ingresar al Sistema</button>
+                    <button onclick="iniciarSesion()" class="btn-principal w-100 py-3 shadow-sm fs-5 mb-3">Ingresar al Sistema</button>
+                    
+                    <div class="text-center mt-2 border-top pt-3 border-secondary border-opacity-25">
+                        <span class="small text-dark fw-medium">¿Eres un cliente nuevo?</span><br>
+                        <button onclick="mostrarRegistro()" class="btn btn-link small fw-bold text-success text-decoration-none p-0 mt-1">Crear una cuenta gratis</button>
+                    </div>
                 </div>
+
+                <div class="card-custom p-4 p-sm-5 shadow-lg tarjeta-login-glass oculto" id="tarjeta-registro">
+                    <div class="text-center mb-3">
+                        <h4 class="fw-bold mt-2" style="color: var(--color-principal);">Nueva Cuenta</h4>
+                        <p class="text-muted small">Únete a La Esperanza</p>
+                    </div>
+                    <div id="alerta-registro"></div>
+                    <div class="mb-3">
+                        <label class="form-label-custom text-dark">Nombre Completo</label>
+                        <input type="text" id="reg-nombre" class="form-control form-control-custom" placeholder="Ej. Juan Pérez">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label-custom text-dark">Correo Electrónico</label>
+                        <input type="email" id="reg-correo" class="form-control form-control-custom" placeholder="tucorreo@email.com">
+                    </div>
+                    <div class="mb-4">
+                        <label class="form-label-custom text-dark">Contraseña</label>
+                        <input type="password" id="reg-pass" class="form-control form-control-custom" placeholder="Crea una contraseña">
+                    </div>
+                    <button onclick="registrarCuenta()" class="btn-principal w-100 py-3 shadow-sm fs-6 mb-3">Completar Registro</button>
+                    
+                    <div class="text-center mt-2 border-top pt-3 border-secondary border-opacity-25">
+                        <span class="small text-dark fw-medium">¿Ya tienes cuenta?</span><br>
+                        <button onclick="mostrarLogin()" class="btn btn-link small fw-bold text-success text-decoration-none p-0 mt-1">Regresar al inicio de sesión</button>
+                    </div>
+                </div>
+
             </div>
         </div>
 
         <div id="seccion-seleccion-actividad" class="oculto">
             <div class="contenedor-movil">
                 <div class="encabezado-actividad">MENÚ PRINCIPAL</div>
-                <div class="cuerpo-actividad">
-                    <div class="w-100 text-center" style="position: relative; z-index: 2;">
-                        <button class="btn-figma-actividad w-100" onclick="seleccionarActividad('comprar')">🛒 Comprar Insumos</button>
-                        <button class="btn-figma-actividad w-100" onclick="seleccionarActividad('vender')">🚜 Vender Cosecha</button>
-                        <hr class="text-white my-4">
-                        <button class="btn-figma-actividad w-100" style="background-color: #2c3e50;" onclick="abrirMisPedidos()">📦 Historial y Gestión de Entregas</button>
-                    </div>
+                <div class="p-5 text-center bg-light flex-grow-1">
+                    <button class="btn-figma-actividad w-100 py-3 mb-3" onclick="seleccionarActividad('comprar')">🛒 Comprar Insumos</button>
+                    <button class="btn-figma-actividad w-100 py-3 mb-4" onclick="seleccionarActividad('vender')">🚜 Vender Cosecha</button>
+                    <hr>
+                    <button class="btn-figma-actividad w-100 py-3 mt-3" style="background-color: #2c3e50;" onclick="abrirMisPedidos()">📦 Mis Pedidos y Rastreo</button>
                 </div>
             </div>
         </div>
@@ -258,12 +120,9 @@
         <div id="seccion-mis-pedidos" class="oculto">
             <div class="row justify-content-center">
                 <div class="col-md-8 col-lg-6">
-                    <div class="mb-3">
-                        <button class="btn btn-sm btn-outline-secondary" onclick="regresarAlMenuDesdePedidos()">← Volver al Menú</button>
-                    </div>
+                    <button class="btn btn-sm btn-outline-secondary mb-3" onclick="regresarAlMenuDesdePedidos()">← Volver al Menú</button>
                     <div class="card-custom p-4 shadow-sm">
                         <h4 class="fw-bold mb-3" style="color: var(--color-principal);">Gestión de Entregas</h4>
-                        <p class="text-muted small">Rastrea la ubicación de tu entrega, edítala o cancélala.</p>
                         <div id="lista-mis-pedidos"></div>
                     </div>
                 </div>
@@ -271,9 +130,7 @@
         </div>
 
         <div id="seccion-panel" class="oculto">
-            <div class="mb-4" id="bloque-regresar-menu">
-                <button class="btn btn-sm btn-outline-secondary" onclick="regresarAlMenu()">← Volver al Menú</button>
-            </div>
+            <button class="btn btn-sm btn-outline-secondary mb-4" id="bloque-regresar-menu" onclick="regresarAlMenu()">← Volver al Menú</button>
 
             <div id="tab-comprar" class="oculto">
                 <h4 class="fw-bold mb-4" style="color: var(--color-principal);">Catálogo de Productos</h4>
@@ -283,14 +140,21 @@
             <div id="tab-carrito-pantalla-aparte" class="oculto">
                 <div class="row justify-content-center">
                     <div class="col-md-8 col-lg-6 card-custom p-4 shadow-sm">
-                        <button class="btn btn-sm btn-link text-muted p-0 text-decoration-none mb-3" onclick="regresarAlCatalogo()">← Seguir comprando</button>
+                        <button class="btn btn-link text-muted p-0 text-decoration-none mb-3" onclick="regresarAlCatalogo()">← Seguir comprando</button>
                         <h4 class="fw-bold border-bottom pb-2">Tu Carrito</h4>
                         <div id="items-carrito-visual" class="mb-4 mt-3"></div>
-                        <div class="d-flex justify-content-between align-items-center pt-2 border-top mb-4">
-                            <span class="fw-bold fs-5">Subtotal Estimado</span>
-                            <span id="total-carrito" class="fw-bold text-success fs-4">Q. 0.00</span>
+                        
+                        <div class="border-top pt-3 mb-4">
+                            <div class="d-flex justify-content-between text-muted mb-3">
+                                <span>Costo de Envío</span>
+                                <span class="badge bg-secondary">Se calculará adelante</span>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center pt-2">
+                                <span class="fw-bold fs-5">Subtotal</span>
+                                <span id="total-carrito" class="fw-bold text-dark fs-4">Q. 0.00</span>
+                            </div>
                         </div>
-                        <button onclick="prepararPasoCompraEntrega()" class="btn-principal w-100">Siguiente: Método de Entrega →</button>
+                        <button onclick="prepararPasoCompraEntrega()" class="btn-principal w-100 py-3">Siguiente: Método de Entrega →</button>
                     </div>
                 </div>
             </div>
@@ -303,7 +167,7 @@
                         <input type="number" id="venta-cantidad" class="form-control mb-3" placeholder="Cantidad (Lbs/Quintales)">
                         <button onclick="agregarProductoALaVenta()" class="btn btn-success w-100 mb-4">+ Agregar a mi lista</button>
                         <div id="lista-productos-venta" class="mb-3"></div>
-                        <button onclick="procesarPasoVentaUno()" class="btn-principal w-100 mt-2">Siguiente: Tipo de Entrega →</button>
+                        <button onclick="procesarPasoVentaUno()" class="btn-principal w-100 py-3">Siguiente: Tipo de Entrega →</button>
                     </div>
                 </div>
             </div>
@@ -314,29 +178,28 @@
                 <div class="encabezado-actividad">MÉTODO DE ENTREGA</div>
                 <div class="flex-grow-1 bg-light p-4">
                     <div id="opcion-domicilio" class="opcion-entrega-row seleccionada" onclick="seleccionarMetodoEntregaVenta('Domicilio')">
-                        <div class="opcion-entrega-texto">DOMICILIO</div>
+                        <div class="opcion-entrega-texto">DOMICILIO (Costo: Q.25)</div>
                     </div>
                     <div id="opcion-puntoventa" class="opcion-entrega-row" onclick="seleccionarMetodoEntregaVenta('Punto de Venta')">
-                        <div class="opcion-entrega-texto">KIOSCO FÍSICO</div>
+                        <div class="opcion-entrega-texto">KIOSCO FÍSICO (Gratis)</div>
                     </div>
 
-                    <div id="detalles-entrega-dinamico" class="mt-3 p-3 bg-white rounded shadow-sm border" style="border-color: var(--color-verde-figma) !important;">
+                    <div id="detalles-entrega-dinamico" class="mt-3 p-3 bg-white rounded shadow-sm border border-success">
                         <div id="div-direccion-domicilio">
-                            <label class="form-label small fw-bold text-dark mb-1">📍 Dirección exacta de entrega:</label>
-                            <input type="text" id="input-direccion-entrega" class="form-control" placeholder="Ej. 4ta Calle 5-10, Zona 1, Ciudad">
+                            <label class="form-label small fw-bold text-dark">📍 Dirección exacta de entrega:</label>
+                            <input type="text" id="input-direccion-entrega" class="form-control" placeholder="Ej. Zona 1, Ciudad">
                         </div>
                         <div id="div-seleccion-kiosco" class="oculto">
-                            <label class="form-label small fw-bold text-dark mb-1">🏪 Seleccione su Kiosco:</label>
+                            <label class="form-label small fw-bold text-dark">🏪 Seleccione su Kiosco:</label>
                             <select id="select-kiosco-entrega" class="form-select">
                                 <option value="Kiosco Central (Zona 1)">Kiosco Central (Zona 1)</option>
-                                <option value="Kiosco Norte (Ruta al Atlántico)">Kiosco Norte (Ruta al Atlántico)</option>
-                                <option value="Kiosco Sur (Ruta al Pacífico)">Kiosco Sur (Ruta al Pacífico)</option>
+                                <option value="Kiosco Norte (Ruta al Atlántico)">Kiosco Norte</option>
                             </select>
                         </div>
                     </div>
 
-                    <button class="btn-principal w-100 mt-4 py-3 shadow-sm fs-5" onclick="mostrarResumenPedido()">Siguiente: Revisar Orden →</button>
-                    <div class="text-center mt-3"><button class="btn btn-link text-muted text-decoration-none" onclick="regresarDesdeEntrega()">← Cancelar</button></div>
+                    <button class="btn-principal w-100 mt-4 py-3" onclick="mostrarResumenPedido()">Siguiente: Revisar Orden →</button>
+                    <div class="text-center mt-3"><button class="btn btn-link text-muted" onclick="regresarDesdeEntrega()">← Cancelar</button></div>
                 </div>
             </div>
         </div>
@@ -345,41 +208,29 @@
             <div class="contenedor-movil">
                 <div class="encabezado-actividad" style="background-color: #2c3e50;">RESUMEN DE LA ORDEN</div>
                 <div class="p-4 flex-grow-1 bg-light">
-                    
                     <div class="card-custom p-3 shadow-sm mb-3 border-top border-4 border-success">
                         <h6 class="fw-bold text-muted mb-3 border-bottom pb-2">📋 DETALLE DE ARTÍCULOS</h6>
                         <div id="lista-resumen-items" class="small mb-2 text-dark"></div>
                         <div class="d-flex justify-content-between fw-bold fs-5 mt-3 pt-2 border-top">
-                            <span id="label-total-resumen">Total:</span>
+                            <span id="label-total-resumen">Total a Pagar:</span>
                             <span id="valor-total-resumen" class="text-success">Q. 0.00</span>
                         </div>
                     </div>
-                    
-                    <div class="card-custom p-3 shadow-sm mb-4">
-                        <h6 class="fw-bold text-muted mb-2 border-bottom pb-2">🚚 DATOS DE LOGÍSTICA</h6>
-                        <p class="mb-1 small"><strong>Operación:</strong> <span id="resumen-tipo-op" class="text-dark"></span></p>
-                        <p class="mb-1 small"><strong>Entrega:</strong> <span id="resumen-metodo-entrega" class="text-dark"></span></p>
-                        <p class="mb-0 small"><strong>Pago:</strong> <span id="resumen-pago" class="text-dark fw-bold"></span></p>
-                    </div>
-
                     <div id="alerta-resumen"></div>
-                    <button class="btn-principal w-100 py-3 mb-3 fw-bold fs-5 shadow-sm" style="background-color: var(--color-verde-figma);" onclick="confirmarFlujoFinal()">✅ CONFIRMAR PEDIDO</button>
-                    <div class="text-center">
-                        <button class="btn btn-link text-muted text-decoration-none" onclick="regresarDesdeResumen()">← Volver y editar entrega</button>
-                    </div>
+                    <button class="btn-principal w-100 py-3 mb-3 fw-bold fs-5" onclick="confirmarFlujoFinal()">✅ CONFIRMAR PEDIDO</button>
+                    <div class="text-center"><button class="btn btn-link text-muted" onclick="regresarDesdeResumen()">← Volver y editar entrega</button></div>
                 </div>
             </div>
         </div>
 
         <div id="seccion-compra-exitosa" class="oculto">
             <div class="contenedor-movil">
-                <div class="encabezado-actividad" style="background-color: var(--color-principal);">¡COMPLETADO!</div>
-                <div class="p-4 text-center flex-grow-1 d-flex flex-column justify-content-center bg-white">
-                    <h4 id="titulo-exito" class="fw-bold text-success mb-2">Procesado con éxito</h4>
-                    <p class="text-muted small mb-4">Presenta este código en caja o al repartidor para validar tu transacción.</p>
-                    <div class="bg-light border border-2 border-success rounded-3 py-4 mb-4 shadow-sm">
-                        <span class="text-muted small fw-bold d-block mb-1">CÓDIGO DE PEDIDO</span>
-                        <div id="token-exito" class="fw-bold fs-1 text-dark" style="letter-spacing: 2px;">------</div>
+                <div class="encabezado-actividad">¡COMPLETADO!</div>
+                <div class="p-4 text-center d-flex flex-column justify-content-center bg-white flex-grow-1">
+                    <h4 class="fw-bold text-success mb-2">Procesado con éxito</h4>
+                    <p class="text-muted small mb-4">Usa este código para validar tu transacción.</p>
+                    <div class="bg-light border border-2 border-success rounded-3 py-4 mb-4">
+                        <div id="token-exito" class="fw-bold fs-1 text-dark">------</div>
                     </div>
                     <button class="btn-principal w-100 py-3" onclick="regresarAlMenuDesdeExito()">Volver al Inicio</button>
                 </div>
