@@ -5,260 +5,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>La Esperanza | Portal Agrícola</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <style>
-        :root {
-            --color-verde-figma: #0f9d58; 
-            --color-principal: #1b4332; 
-            --color-secundario: #40916c;
-            --fondo-gris: #f8f9fa;
-            --texto-oscuro: #212529;
-            --borde-suave: #e9ecef;
-        }
-
-        body { 
-            background-color: var(--fondo-gris); 
-            font-family: 'Inter', sans-serif;
-            color: var(--texto-oscuro);
-        }
-
-        .navbar-esperanza { 
-            background-color: #ffffff; 
-            border-bottom: 1px solid var(--borde-suave);
-            padding: 1rem 0;
-        }
-        .navbar-brand-custom {
-            color: var(--color-principal) !important;
-            font-weight: 700;
-            font-size: 1.4rem;
-        }
-
+        :root { --color-verde-figma: #0f9d58; --color-principal: #1b4332; --color-secundario: #40916c; }
+        body { background-color: #f8f9fa; font-family: 'Inter', sans-serif; color: #212529; }
+        .navbar-esperanza { background-color: #ffffff; border-bottom: 1px solid #e9ecef; padding: 1rem 0; }
+        .navbar-brand-custom { color: var(--color-principal) !important; font-weight: 700; font-size: 1.4rem; }
         .oculto { display: none !important; }
-
-        .card-custom {
-            background: #ffffff;
-            border: 1px solid var(--borde-suave);
-            border-radius: 12px;
-        }
-        .form-label-custom {
-            font-weight: 500;
-            font-size: 0.875rem;
-            margin-bottom: 0.5rem;
-        }
-        .form-control-custom {
-            border: 1px solid #ced4da;
-            border-radius: 8px;
-            padding: 0.6rem 0.75rem;
-        }
-
-        .btn-principal {
-            background-color: var(--color-principal);
-            color: #ffffff;
-            font-weight: 600;
-            border-radius: 8px;
-            padding: 0.6rem 1.2rem;
-            border: none;
-            transition: background-color 0.2s;
-        }
-        .btn-principal:hover {
-            background-color: #123024;
-        }
-        .btn-secundario-outline {
-            border: 1px solid var(--color-principal);
-            color: var(--color-principal);
-            background: transparent;
-            font-weight: 500;
-            border-radius: 8px;
-            padding: 0.4rem 1rem;
-        }
-
-        /* --- CONTENEDOR MÓVIL (ESTILO FIGMA) --- */
-        .contenedor-movil {
-            max-width: 420px;
-            margin: 2rem auto;
-            background: #ffffff;
-            border-radius: 24px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-            border: 1px solid var(--borde-suave);
-            position: relative;
-            min-height: 580px;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .encabezado-actividad {
-            background-color: var(--color-verde-figma);
-            color: #ffffff;
-            text-align: center;
-            padding: 1.5rem 1rem;
-            font-weight: 600;
-            font-size: 1.15rem;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
-        }
-
-        .cuerpo-actividad {
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 2rem;
-            background-image: url('https://images.unsplash.com/photo-1545241047-6083a3684587?q=80&w=600&auto=format&fit=crop'); 
-            background-size: cover;
-            background-position: center bottom;
-            position: relative;
-        }
-
-        .cuerpo-actividad::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(255, 255, 255, 0.15); 
-            z-index: 1;
-        }
-
-        .zona-botones-figma {
-            position: relative;
-            z-index: 2;
-            width: 100%;
-            text-align: center;
-        }
-
-        .btn-figma-actividad {
-            background-color: var(--color-verde-figma);
-            color: #ffffff;
-            border: none;
-            width: 90%;
-            padding: 0.9rem 1rem;
-            font-size: 1.1rem;
-            font-weight: 500;
-            margin: 0.5rem 0;
-            transition: background-color 0.2s;
-        }
-        .btn-figma-actividad:hover {
-            background-color: #0b7a44;
-            color: #ffffff;
-        }
-
-        .texto-o-figma {
-            font-size: 1.1rem;
-            color: #212529;
-            margin: 0.2rem 0;
-            font-weight: 500;
-        }
-
-        /* --- PANTALLA TIPO DE ENTREGA --- */
-        .cuerpo-entrega-figma {
-            flex-grow: 1;
-            background-color: #f8f9fa;
-            padding: 2rem 1.2rem;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        .opcion-entrega-row {
-            background-color: var(--color-verde-figma);
-            color: #ffffff;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0;
-            margin-bottom: 1.5rem;
-            border-radius: 4px;
-            cursor: pointer;
-            overflow: hidden;
-            border: 3px solid transparent;
-            transition: all 0.2s;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
+        .card-custom { background: #ffffff; border: 1px solid #e9ecef; border-radius: 12px; }
+        .btn-principal { background-color: var(--color-principal); color: #ffffff; font-weight: 600; border-radius: 8px; padding: 0.6rem 1.2rem; border: none; }
+        .btn-principal:hover { background-color: #123024; }
         
-        .opcion-entrega-row.seleccionada {
-            border-color: var(--color-principal);
-            box-shadow: 0 0 12px rgba(27,67,50,0.35);
-            transform: scale(1.02);
-        }
-
-        .opcion-entrega-texto {
-            font-size: 1.2rem;
-            font-weight: 600;
-            padding-left: 1.2rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .opcion-entrega-img {
-            width: 95px;
-            height: 65px;
-            object-fit: cover;
-        }
-
-        .btn-confirmar-figma {
-            background-color: var(--color-verde-figma);
-            color: #ffffff;
-            border: none;
-            width: 100%;
-            padding: 1rem;
-            font-size: 1.2rem;
-            font-weight: 600;
-            border-radius: 4px;
-            letter-spacing: 0.5px;
-        }
-
-        .producto-tag {
-            font-size: 0.75rem;
-            font-weight: 600;
-        }
-
-        .token-box {
-            background-color: #f1f8f5;
-            border: 2px dashed var(--color-verde-figma);
-            color: var(--color-principal);
-            font-size: 1.8rem;
-            font-weight: 700;
-            letter-spacing: 2px;
-            border-radius: 12px;
-            padding: 1rem;
-            margin: 1.5rem 0;
-        }
-
-        .btn-flotante-carrito {
-            position: fixed;
-            bottom: 25px;
-            right: 25px;
-            background-color: var(--color-verde-figma);
-            color: white;
-            border: none;
-            border-radius: 50px;
-            padding: 15px 25px;
-            font-weight: 600;
-            box-shadow: 0 4px 15px rgba(15, 157, 88, 0.4);
-            z-index: 1000;
-            transition: transform 0.2s, background-color 0.2s;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .btn-flotante-carrito:hover {
-            transform: scale(1.05);
-            background-color: #0b7a44;
-            color: white;
-        }
-
-        .ganancia-informativa {
-            background-color: #e8f5e9;
-            border: 1px solid #c8e6c9;
-            color: #1b5e20;
-            border-radius: 8px;
-            padding: 0.75rem;
-            font-weight: 600;
-            font-size: 0.95rem;
-        }
+        .contenedor-movil { max-width: 420px; margin: 2rem auto; background: #ffffff; border-radius: 24px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.08); border: 1px solid #e9ecef; min-height: 580px; display: flex; flex-direction: column; }
+        .encabezado-actividad { background-color: var(--color-verde-figma); color: #ffffff; text-align: center; padding: 1.5rem 1rem; font-weight: 600; font-size: 1.15rem; letter-spacing: 0.5px; text-transform: uppercase; }
+        .cuerpo-actividad { flex-grow: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 2rem; background-image: url('https://images.unsplash.com/photo-1545241047-6083a3684587?q=80&w=600&auto=format&fit=crop'); background-size: cover; background-position: center bottom; position: relative; }
+        .cuerpo-actividad::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(255, 255, 255, 0.15); z-index: 1; }
+        .btn-figma-actividad { position: relative; z-index: 2; background-color: var(--color-verde-figma); color: #ffffff; border: none; width: 90%; padding: 0.9rem 1rem; font-size: 1.1rem; font-weight: 500; margin: 0.5rem 0; transition: 0.2s; border-radius: 8px; }
+        .btn-figma-actividad:hover { background-color: #0b7a44; color: #ffffff; }
+        
+        .opcion-entrega-row { background-color: var(--color-verde-figma); color: #ffffff; display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem; border-radius: 4px; cursor: pointer; border: 3px solid transparent; }
+        .opcion-entrega-row.seleccionada { border-color: var(--color-principal); box-shadow: 0 0 12px rgba(27,67,50,0.35); transform: scale(1.02); }
+        .opcion-entrega-texto { font-size: 1.2rem; font-weight: 600; padding-left: 1.2rem; }
+        .opcion-entrega-img { width: 95px; height: 65px; object-fit: cover; }
+        
+        .btn-flotante-carrito { position: fixed; bottom: 25px; right: 25px; background-color: var(--color-verde-figma); color: white; border: none; border-radius: 50px; padding: 15px 25px; font-weight: 600; box-shadow: 0 4px 15px rgba(15, 157, 88, 0.4); z-index: 1000; display: flex; align-items: center; gap: 10px; }
     </style>
 </head>
 <body>
@@ -268,15 +39,13 @@
             <span class="navbar-brand navbar-brand-custom mb-0 h1">🌾 La Esperanza</span>
             <div id="nav-usuario" class="oculto d-flex align-items-center">
                 <span id="nombre-usuario" class="me-3 fw-medium text-dark small d-none d-md-inline"></span>
-                <button onclick="cerrarSesion()" class="btn-secundario-outline small">Cerrar Sesión</button>
+                <button onclick="cerrarSesion()" class="btn btn-sm btn-outline-danger">Salir</button>
             </div>
         </div>
     </nav>
 
-    <!-- Botón Flotante Dinámico del Carrito de Compras -->
     <button id="btn-flotante-ver-carrito" class="btn-flotante-carrito oculto" onclick="irAlCarritoPestaña()">
-        🛒 Ver mi Carrito
-        <span id="badge-flotante-conteo" class="badge bg-white text-dark rounded-circle px-2 py-1" style="font-size: 0.85rem;">0</span>
+        🛒 Carrito <span id="badge-flotante-conteo" class="badge bg-white text-dark rounded-circle px-2 py-1">0</span>
     </button>
 
     <div class="container mt-4 mb-5">
@@ -284,226 +53,134 @@
         <!-- PANTALLA 1: LOGIN -->
         <div id="seccion-login" class="row justify-content-center my-5">
             <div class="col-md-5 col-lg-4">
-                <div class="card-custom p-4 p-sm-5">
+                <div class="card-custom p-4 p-sm-5 shadow-sm">
                     <h3 class="fw-bold mb-2 text-center" style="color: var(--color-principal);">Bienvenido</h3>
-                    <p class="text-muted text-center small mb-4">Ingresa tus credenciales para acceder al portal agrícola.</p>
                     <div id="alerta-login"></div>
                     <div class="mb-3">
-                        <label class="form-label-custom">Correo Electrónico</label>
-                        <input type="email" id="login-correo" class="form-control form-control-custom" value="admin@esperanza.com">
+                        <label class="form-label text-muted small">Correo Electrónico</label>
+                        <input type="email" id="login-correo" class="form-control" value="admin@esperanza.com">
                     </div>
                     <div class="mb-4">
-                        <label class="form-label-custom">Contraseña</label>
-                        <input type="password" id="login-pass" class="form-control form-control-custom" value="123456">
+                        <label class="form-label text-muted small">Contraseña</label>
+                        <input type="password" id="login-pass" class="form-control" value="123456">
                     </div>
                     <button onclick="iniciarSesion()" class="btn-principal w-100">Ingresar al Portal</button>
                 </div>
             </div>
         </div>
 
-        <!-- PANTALLA 2: SELECCIÓN DE ACTIVIDAD -->
+        <!-- PANTALLA 2: SELECCIÓN DE ACTIVIDAD (MENÚ PRINCIPAL) -->
         <div id="seccion-seleccion-actividad" class="oculto">
             <div class="contenedor-movil">
-                <div class="encabezado-actividad">
-                    ¿QUÉ ACTIVIDAD DESEA REALIZAR?
-                </div>
+                <div class="encabezado-actividad">MENÚ PRINCIPAL</div>
                 <div class="cuerpo-actividad">
-                    <div class="zona-botones-figma">
-                        <button class="btn-figma-actividad" onclick="seleccionarActividad('comprar')">Comprar producto</button>
-                        <div class="texto-o-figma">o</div>
-                        <button class="btn-figma-actividad" onclick="seleccionarActividad('vender')">Vender producto</button>
+                    <div class="w-100 text-center" style="position: relative; z-index: 2;">
+                        <button class="btn-figma-actividad w-100" onclick="seleccionarActividad('comprar')">🛒 Comprar Insumos</button>
+                        <button class="btn-figma-actividad w-100" onclick="seleccionarActividad('vender')">🚜 Vender Cosecha</button>
+                        <hr class="text-white my-4">
+                        <button class="btn-figma-actividad w-100" style="background-color: #2c3e50;" onclick="abrirMisPedidos()">📦 Mis Pedidos y Rastreo</button>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- PANTALLA 3: INTERFAZ TIPO DE ENTREGA -->
-        <div id="seccion-tipo-entrega-venta" class="oculto">
-            <div class="contenedor-movil">
-                <div class="encabezado-actividad">
-                    TIPO DE ENTREGA
-                </div>
-                <div class="cuerpo-entrega-figma">
-                    <div>
-                        <!-- Opción 1: Domicilio -->
-                        <div id="opcion-domicilio" class="opcion-entrega-row seleccionada" onclick="seleccionarMetodoEntregaVenta('Domicilio')">
-                            <div class="opcion-entrega-texto">DOMICILIO</div>
-                            <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?q=80&w=150&auto=format&fit=crop" class="opcion-entrega-img" alt="Domicilio">
-                        </div>
-
-                        <!-- Opción 2: Punto de Venta -->
-                        <div id="opcion-puntoventa" class="opcion-entrega-row" onclick="seleccionarMetodoEntregaVenta('Punto de Venta')">
-                            <div class="opcion-entrega-texto">PUNTO DE VENTA</div>
-                            <img src="https://images.unsplash.com/photo-1533900298318-6b8da08a523e?q=80&w=150&auto=format&fit=crop" class="opcion-entrega-img" alt="Punto de venta">
+        <!-- PANTALLA 3: MIS PEDIDOS (RASTREO Y MULTAS) -->
+        <div id="seccion-mis-pedidos" class="oculto">
+            <div class="row justify-content-center">
+                <div class="col-md-8 col-lg-6">
+                    <div class="mb-3">
+                        <button class="btn btn-sm btn-outline-secondary" onclick="regresarAlMenuDesdePedidos()">← Volver al Menú</button>
+                    </div>
+                    <div class="card-custom p-4 shadow-sm">
+                        <h4 class="fw-bold mb-3" style="color: var(--color-principal);">Gestión de Pedidos</h4>
+                        <p class="text-muted small">Rastrea la ubicación de tu entrega o cancela tu pedido (Aplica multa operativa).</p>
+                        <div id="lista-mis-pedidos">
+                            <p class="text-center text-muted mt-4">Cargando información de rastreo...</p>
                         </div>
                     </div>
-
-                    <div class="text-center">
-                        <div id="alerta-entrega-venta" class="mb-2"></div>
-                        <button class="btn-confirmar-figma" onclick="confirmarFlujoFinal()">Confirmar</button>
-                        <button id="btn-regresar-entrega" class="btn btn-link btn-sm text-muted mt-2 text-decoration-none" onclick="regresarDesdeEntrega()">← Modificar datos</button>
-                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- PANTALLA 4: COMPRA/VENTA EXITOSA (TOKEN) -->
-        <div id="seccion-compra-exitosa" class="oculto">
-            <div class="contenedor-movil">
-                <div class="encabezado-actividad" style="background-color: var(--color-principal);">
-                    ¡PROCESO COMPLETADO!
-                </div>
-                <div class="p-4 text-center d-flex flex-column justify-content-center flex-grow-1">
-                    <div class="mb-3 fs-1">✅</div>
-                    <h5 id="titulo-exito" class="fw-bold text-success mb-2">Su pedido ha sido procesado</h5>
-                    <p id="descripcion-exito" class="text-muted small px-2">Presente el siguiente código en el Kiosco seleccionado para retirar sus productos:</p>
-                    
-                    <div id="token-exito" class="token-box">------</div>
-                    
-                    <p class="text-muted small mb-4">¡Gracias por confiar en Kiosco La Esperanza!</p>
-                    <button class="btn-figma-actividad w-100 m-0" style="border-radius: 8px;" onclick="regresarAlMenuDesdeExito()">
-                        Volver al Menú Principal
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- PANTALLA 5: PANEL CENTRAL -->
+        <!-- PANTALLA 4: PANEL CENTRAL DE COMPRAS Y VENTAS -->
         <div id="seccion-panel" class="oculto">
-            
             <div class="mb-4" id="bloque-regresar-menu">
-                <button class="btn btn-sm btn-outline-secondary" onclick="regresarAlMenu()">← Volver al Menú Principal</button>
+                <button class="btn btn-sm btn-outline-secondary" onclick="regresarAlMenu()">← Volver al Menú</button>
             </div>
 
-            <!-- COMPRAR: CATÁLOGO -->
+            <!-- TAB COMPRAR -->
             <div id="tab-comprar" class="oculto">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="d-flex justify-content-between align-items-center mb-4">
-                            <h4 class="fw-bold m-0" style="color: var(--color-principal);">Catálogo de Productos</h4>
-                            <button class="btn btn-success d-md-none" onclick="irAlCarritoPestaña()">🛒 Carrito</button>
-                        </div>
-                        <div class="row g-3" id="catalogo-productos">
-                            <p class="text-muted">Cargando catálogo...</p>
-                        </div>
-                    </div>
-                </div>
+                <h4 class="fw-bold mb-4" style="color: var(--color-principal);">Catálogo de Productos</h4>
+                <div class="row g-3" id="catalogo-productos"></div>
             </div>
 
-            <!-- COMPRAR: VISTA PESTAÑA APARTE DEL CARRITO -->
+            <!-- VISTA CARRITO -->
             <div id="tab-carrito-pantalla-aparte" class="oculto">
                 <div class="row justify-content-center">
-                    <div class="col-md-8 col-lg-6">
-                        <div class="mb-3">
-                            <button class="btn btn-sm btn-link text-muted p-0 text-decoration-none" onclick="regresarAlCatalogo()">← Volver al catálogo</button>
+                    <div class="col-md-8 col-lg-6 card-custom p-4 shadow-sm">
+                        <button class="btn btn-sm btn-link text-muted p-0 text-decoration-none mb-3" onclick="regresarAlCatalogo()">← Seguir comprando</button>
+                        <h4 class="fw-bold border-bottom pb-2">Detalle de Compra</h4>
+                        <div id="items-carrito-visual" class="mb-4 mt-3"></div>
+                        <div class="d-flex justify-content-between align-items-center pt-2 border-top mb-4">
+                            <span class="fw-bold fs-5">Total a Pagar</span>
+                            <span id="total-carrito" class="fw-bold text-success fs-4">Q. 0.00</span>
                         </div>
-
-                        <div class="card-custom p-4 shadow-sm" style="border-radius: 16px;">
-                            <div class="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom">
-                                <h4 class="fw-bold m-0" style="color: var(--color-principal); font-size: 1.3rem;">Detalle de Compra</h4>
-                                <span id="badge-total-articulos" class="badge rounded-pill bg-secondary text-white fw-normal" style="font-size: 0.85rem;">0 artículos</span>
-                            </div>
-
-                            <div id="items-carrito-visual" class="mb-4" style="max-height: 400px; overflow-y: auto; padding-right: 4px;"></div>
-
-                            <div class="border-top pt-3 mb-4" style="font-size: 0.95rem;">
-                                <div class="d-flex justify-content-between text-muted mb-2">
-                                    <span>Subtotal</span>
-                                    <span id="carrito-subtotal" class="fw-semibold text-dark">Q. 0.00</span>
-                                </div>
-                                <div class="d-flex justify-content-between text-muted mb-3">
-                                    <span>Envío</span>
-                                    <span class="text-success fw-bold text-uppercase" style="font-size: 0.75rem; background: #e8f5e9; padding: 2px 6px; border-radius: 4px;">Gratis</span>
-                                </div>
-                                <div class="d-flex justify-content-between align-items-center pt-2 border-top">
-                                    <span class="fw-bold text-dark" style="font-size: 1.1rem;">Total</span>
-                                    <span id="total-carrito" class="fw-bold text-dark fs-4">Q. 0.00</span>
-                                </div>
-                            </div>
-
-                            <div id="alerta-compra"></div>
-
-                            <div class="mb-4">
-                                <label class="form-label-custom text-muted" style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.5px;">Método de Pago</label>
-                                <select id="metodo-pago" class="form-select form-control-custom" style="font-size: 0.9rem;">
-                                    <option value="Efectivo contra entrega">💵 Efectivo contra entrega</option>
-                                    <option value="Transferencia">🏦 Transferencia Bancaria</option>
-                                </select>
-                            </div>
-
-                            <button onclick="prepararPasoCompraEntrega()" class="btn-principal w-100 py-3 shadow-sm d-flex justify-content-center align-items-center gap-2" style="background-color: var(--color-verde-figma); border-radius: 12px; font-size: 1.05rem;">
-                                <span>Realizar Compra (Siguiente Paso)</span>
-                            </button>
-                        </div>
+                        <select id="metodo-pago" class="form-select mb-3"><option value="Efectivo">Efectivo contra entrega</option></select>
+                        <button onclick="prepararPasoCompraEntrega()" class="btn-principal w-100">Confirmar Método de Entrega →</button>
                     </div>
                 </div>
             </div>
-
-            <!-- VENDER: FORMULARIO MULTIPRODUCTO CON LISTADO Y GANANCIAS -->
+            
+            <!-- TAB VENDER (Resumido para la vista) -->
             <div id="tab-vender" class="oculto">
                 <div class="row justify-content-center">
-                    <div class="col-md-8 col-lg-6">
-                        <div class="card-custom p-4 shadow-sm" style="border-radius: 16px;">
-                            <h4 class="fw-bold mb-2" style="color: var(--color-principal);">Ofrecer Cosechas al Kiosco</h4>
-                            <p class="text-muted small mb-4">Agrega los productos que cosechaste para cotizar tus ganancias totales.</p>
-                            
-                            <div id="alerta-venta"></div>
-                            
-                            <!-- Bloque de carga de productos individuales -->
-                            <div class="bg-light p-3 border rounded-3 mb-4">
-                                <h6 class="fw-bold text-dark mb-3" style="font-size: 0.9rem;">Añadir Producto a la Oferta</h6>
-                                <div class="mb-2">
-                                    <label class="form-label-custom text-muted mb-1" style="font-size: 0.8rem;">¿Qué producto deseas vender?</label>
-                                    <select id="venta-producto" class="form-select form-control-custom" style="font-size: 0.9rem;">
-                                        <!-- Se llena automáticamente con JS en base a la DB -->
-                                    </select>
-                                </div>
-
-                                <div class="mb-3">
-                                    <label class="form-label-custom text-muted mb-1" style="font-size: 0.8rem;">Cantidad de Cosecha</label>
-                                    <input type="number" id="venta-cantidad" class="form-control form-control-custom" placeholder="Ej. 15" min="1" style="font-size: 0.9rem;">
-                                </div>
-
-                                <button type="button" onclick="agregarProductoALaVenta()" class="btn btn-sm w-100 text-white fw-bold" style="background-color: var(--color-secundario); border-radius: 6px;">
-                                    + Agregar este Producto a mi Lista
-                                </button>
-                            </div>
-
-                            <!-- Listado visual dinámico de cosechas agregadas -->
-                            <label class="form-label-custom text-dark fw-bold mb-2">Lista de Productos a Vender:</label>
-                            <div id="lista-productos-venta" class="mb-4" style="max-height: 250px; overflow-y: auto;">
-                                <div class="text-center py-3 text-muted small">No ha agregado productos para vender todavía.</div>
-                            </div>
-
-                            <!-- Visualización de ganancias en tiempo real -->
-                            <div class="mb-4">
-                                <div class="ganancia-informativa d-flex justify-content-between align-items-center py-3 px-3" style="border-radius: 12px;">
-                                    <span style="font-size: 1rem;">Ganancia Total Estimada:</span>
-                                    <span id="ganancia-total-estimada" class="fs-4 fw-bold">Q. 0.00</span>
-                                </div>
-                            </div>
-
-                            <div class="mb-4">
-                                <label class="form-label-custom">Kiosco de Recepción</label>
-                                <select id="venta-kiosco" class="form-select form-control-custom">
-                                    <option value="" disabled selected>-- Seleccione un Kiosco --</option>
-                                    <option value="Kiosco Central">Kiosco Central</option>
-                                    <option value="Kiosco Norte">Kiosco Norte</option>
-                                    <option value="Kiosco Sur">Kiosco Sur</option>
-                                </select>
-                            </div>
-
-                            <button onclick="procesarPasoVentaUno()" class="btn-principal w-100 py-3" style="background-color: var(--color-verde-figma); border-radius: 12px;">
-                                Siguiente: Tipo de Entrega →
-                            </button>
-                        </div>
+                    <div class="col-md-8 col-lg-6 card-custom p-4 shadow-sm">
+                        <h4 class="fw-bold mb-3">Ofrecer Cosechas</h4>
+                        <select id="venta-producto" class="form-select mb-2"></select>
+                        <input type="number" id="venta-cantidad" class="form-control mb-3" placeholder="Cantidad (Lbs/Quintales)">
+                        <button onclick="agregarProductoALaVenta()" class="btn btn-success w-100 mb-4">+ Agregar a mi lista</button>
+                        <div id="lista-productos-venta" class="mb-3"></div>
+                        <select id="venta-kiosco" class="form-select mb-4">
+                            <option value="Kiosco Central">Kiosco Central</option>
+                            <option value="Kiosco Norte">Kiosco Norte</option>
+                        </select>
+                        <button onclick="procesarPasoVentaUno()" class="btn-principal w-100">Siguiente: Tipo de Entrega →</button>
                     </div>
                 </div>
             </div>
-
         </div>
-    </div>
 
+        <!-- PANTALLA 5: TIPO DE ENTREGA -->
+        <div id="seccion-tipo-entrega-venta" class="oculto">
+            <div class="contenedor-movil">
+                <div class="encabezado-actividad">TIPO DE ENTREGA</div>
+                <div class="flex-grow-1 bg-light p-4">
+                    <div id="opcion-domicilio" class="opcion-entrega-row seleccionada" onclick="seleccionarMetodoEntregaVenta('Domicilio')">
+                        <div class="opcion-entrega-texto">DOMICILIO</div>
+                    </div>
+                    <div id="opcion-puntoventa" class="opcion-entrega-row" onclick="seleccionarMetodoEntregaVenta('Punto de Venta')">
+                        <div class="opcion-entrega-texto">KIOSCO FÍSICO</div>
+                    </div>
+                    <div id="alerta-entrega-venta" class="mt-4 text-center"></div>
+                    <button class="btn-principal w-100 mt-2 py-3" onclick="confirmarFlujoFinal()">FINALIZAR PROCESO</button>
+                    <div class="text-center mt-3"><button class="btn btn-link text-muted text-decoration-none" onclick="regresarDesdeEntrega()">← Cancelar</button></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PANTALLA 6: ÉXITO -->
+        <div id="seccion-compra-exitosa" class="oculto">
+            <div class="contenedor-movil">
+                <div class="encabezado-actividad" style="background-color: var(--color-principal);">¡COMPLETADO!</div>
+                <div class="p-4 text-center flex-grow-1 d-flex flex-column justify-content-center">
+                    <h5 id="titulo-exito" class="fw-bold text-success mb-3">Procesado con éxito</h5>
+                    <div id="token-exito" class="fw-bold fs-1 text-dark mb-4 p-3 bg-light border border-2 border-success rounded">------</div>
+                    <button class="btn-principal w-100" onclick="regresarAlMenuDesdeExito()">Volver al Inicio</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
     <script src="app.js"></script>
 </body>
 </html>
