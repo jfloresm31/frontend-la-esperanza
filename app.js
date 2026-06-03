@@ -7,6 +7,25 @@ let carritoVentas = [];
 let productosCache = [];   
 
 // ==========================================
+// FUNCIÓN MÁGICA DE IMÁGENES
+// ==========================================
+function obtenerImagen(nombre) {
+    const n = nombre.toLowerCase();
+    if(n.includes('tomate')) return 'https://images.unsplash.com/photo-1592924357228-91a4daadcfea?q=80&w=400&auto=format&fit=crop';
+    if(n.includes('frijol')) return 'https://images.unsplash.com/photo-1551326844-4df70f78d0e9?q=80&w=400&auto=format&fit=crop';
+    if(n.includes('cebolla')) return 'https://images.unsplash.com/photo-1618512496248-a07fe83aa8cb?q=80&w=400&auto=format&fit=crop';
+    if(n.includes('papa')) return 'https://images.unsplash.com/photo-1518977676601-b53f82aba655?q=80&w=400&auto=format&fit=crop';
+    if(n.includes('zanahoria')) return 'https://images.unsplash.com/photo-1598170845058-32b9d6a5da37?q=80&w=400&auto=format&fit=crop';
+    if(n.includes('chile') || n.includes('pimiento')) return 'https://images.unsplash.com/photo-1563565375-f3fdfdbefa83?q=80&w=400&auto=format&fit=crop';
+    if(n.includes('maiz') || n.includes('maíz')) return 'https://images.unsplash.com/photo-1551754655-cd27e38d2076?q=80&w=400&auto=format&fit=crop';
+    if(n.includes('limon') || n.includes('limón')) return 'https://images.unsplash.com/photo-1590502593747-422e15307311?q=80&w=400&auto=format&fit=crop';
+    if(n.includes('aguacate')) return 'https://images.unsplash.com/photo-1523049673857-eb18f1d7b578?q=80&w=400&auto=format&fit=crop';
+    if(n.includes('repollo')) return 'https://images.unsplash.com/photo-1556801712-76c8eb07bbc9?q=80&w=400&auto=format&fit=crop';
+    // Imagen por defecto si es un producto nuevo
+    return 'https://images.unsplash.com/photo-1595855759920-86582396756a?q=80&w=400&auto=format&fit=crop'; 
+}
+
+// ==========================================
 // 1. LOGIN Y NAVEGACIÓN
 // ==========================================
 async function iniciarSesion() {
@@ -34,8 +53,11 @@ function cerrarSesion() { location.reload(); }
 function seleccionarActividad(actividad) {
     document.getElementById('seccion-seleccion-actividad').classList.add('oculto');
     document.getElementById('seccion-panel').classList.remove('oculto');
+    
+    // AQUÍ ARREGLAMOS EL BUG: Nos aseguramos de ocultar todo antes de abrir la nueva pestaña
     document.getElementById('tab-comprar').classList.add('oculto');
     document.getElementById('tab-vender').classList.add('oculto');
+    document.getElementById('tab-carrito-pantalla-aparte').classList.add('oculto'); 
     
     if (actividad === 'comprar') {
         document.getElementById('tab-comprar').classList.remove('oculto');
@@ -54,7 +76,7 @@ function regresarAlMenu() {
 }
 
 // ==========================================
-// 2. SISTEMA DE RASTREO, MULTAS Y EDICIÓN
+// 2. SISTEMA DE RASTREO Y EDICIÓN
 // ==========================================
 function abrirMisPedidos() {
     document.getElementById('seccion-seleccion-actividad').classList.add('oculto');
@@ -146,7 +168,7 @@ async function editarPedido(idPedido) {
 }
 
 // ==========================================
-// 3. COMPRAS Y VENTAS
+// 3. COMPRAS (AHORA CON IMÁGENES)
 // ==========================================
 async function cargarCatalogo() {
     const contenedor = document.getElementById('catalogo-productos');
@@ -154,14 +176,21 @@ async function cargarCatalogo() {
     productosCache = await respuesta.json();
     contenedor.innerHTML = '';
     productosCache.forEach(prod => {
+        const imgUrl = obtenerImagen(prod.nombre); // Llamamos a la magia
+        
         contenedor.innerHTML += `
             <div class="col-6 col-md-4">
-                <div class="card-custom p-3 h-100 shadow-sm">
-                    <h6 class="fw-bold text-dark">${prod.nombre}</h6>
-                    <p class="text-success mb-1">Q. ${parseFloat(prod.precio_unitario).toFixed(2)}</p>
-                    <p class="small text-muted mb-2">Stock: ${prod.stock_disponible}</p>
-                    <input type="number" id="cant-${prod.id_producto}" class="form-control form-control-sm mb-2" value="1" min="1">
-                    <button onclick="agregarAlCarrito(${prod.id_producto})" class="btn btn-sm btn-success w-100">Comprar</button>
+                <div class="card-custom h-100 shadow-sm overflow-hidden d-flex flex-column">
+                    <img src="${imgUrl}" class="w-100" style="height: 120px; object-fit: cover;" alt="${prod.nombre}">
+                    <div class="p-3 d-flex flex-column flex-grow-1">
+                        <h6 class="fw-bold text-dark mb-1" style="font-size: 0.9rem;">${prod.nombre}</h6>
+                        <p class="text-success fw-bold mb-1">Q. ${parseFloat(prod.precio_unitario).toFixed(2)}</p>
+                        <p class="small text-muted mb-2">Stock: ${prod.stock_disponible}</p>
+                        <div class="mt-auto">
+                            <input type="number" id="cant-${prod.id_producto}" class="form-control form-control-sm mb-2" value="1" min="1">
+                            <button onclick="agregarAlCarrito(${prod.id_producto})" class="btn btn-sm btn-success w-100 fw-bold">Comprar</button>
+                        </div>
+                    </div>
                 </div>
             </div>`;
     });
@@ -172,9 +201,13 @@ function agregarAlCarrito(id) {
     const prod = productosCache.find(p => p.id_producto === id);
     const item = carritoProductos.find(i => i.id_producto === id);
     if(item) item.cantidad += cant;
-    else carritoProductos.push({ ...prod, cantidad: cant });
+    else carritoProductos.push({ ...prod, cantidad: cant, imagen: obtenerImagen(prod.nombre) });
     document.getElementById('badge-flotante-conteo').innerText = carritoProductos.length;
-    alert("Producto agregado");
+    
+    // Pequeña animación visual para saber que se agregó
+    const btnFlotante = document.getElementById('btn-flotante-ver-carrito');
+    btnFlotante.style.transform = 'scale(1.2)';
+    setTimeout(() => btnFlotante.style.transform = 'scale(1)', 200);
 }
 
 function irAlCarritoPestaña() {
@@ -188,9 +221,14 @@ function irAlCarritoPestaña() {
     let total = 0;
     carritoProductos.forEach(i => {
         total += (i.precio_unitario * i.cantidad);
-        cont.innerHTML += `<div class="d-flex justify-content-between border-bottom pb-2 mb-2">
-            <span>${i.cantidad}x ${i.nombre}</span><span class="fw-bold">Q. ${(i.precio_unitario * i.cantidad).toFixed(2)}</span>
-        </div>`;
+        cont.innerHTML += `
+            <div class="d-flex align-items-center justify-content-between border-bottom pb-2 mb-2">
+                <div class="d-flex align-items-center gap-2">
+                    <img src="${i.imagen}" style="width: 40px; height: 40px; object-fit: cover; border-radius: 6px;">
+                    <span class="small"><span class="text-muted">${i.cantidad}x</span> <span class="fw-bold">${i.nombre}</span></span>
+                </div>
+                <span class="fw-bold text-dark">Q. ${(i.precio_unitario * i.cantidad).toFixed(2)}</span>
+            </div>`;
     });
     document.getElementById('total-carrito').innerText = `Q. ${total.toFixed(2)}`;
 }
@@ -203,29 +241,50 @@ function regresarAlCatalogo() {
 }
 
 function prepararPasoCompraEntrega() {
-    if(carritoProductos.length === 0) return alert("Carrito vacío");
+    if(carritoProductos.length === 0) return alert("El carrito está vacío");
     modoActual = 'COMPRA';
     document.getElementById('seccion-panel').classList.add('oculto');
     document.getElementById('seccion-tipo-entrega-venta').classList.remove('oculto');
 }
 
+// ==========================================
+// 4. VENTAS (AHORA CON PRECIOS APROXIMADOS)
+// ==========================================
 function inicializarFormularioVentas() {
     const sel = document.getElementById('venta-producto');
-    sel.innerHTML = '';
-    productosCache.forEach(p => sel.innerHTML += `<option value="${p.id_producto}">${p.nombre}</option>`);
+    sel.innerHTML = '<option value="" disabled selected>-- Elige un producto --</option>';
+    productosCache.forEach(p => {
+        // Le agregamos el precio unitario como referencia (data-precio)
+        sel.innerHTML += `<option value="${p.id_producto}" data-precio="${p.precio_unitario}">${p.nombre} (Aprox: Q. ${p.precio_unitario})</option>`;
+    });
 }
 
 function agregarProductoALaVenta() {
-    const id = document.getElementById('venta-producto').value;
+    const select = document.getElementById('venta-producto');
+    const id = select.value;
     const cant = document.getElementById('venta-cantidad').value;
-    const nombre = document.getElementById('venta-producto').options[document.getElementById('venta-producto').selectedIndex].text;
-    carritoVentas.push({ id_producto: id, cantidad: cant, nombre: nombre });
-    document.getElementById('lista-productos-venta').innerHTML += `<p class="small mb-1 text-success fw-bold">✅ ${cant}x ${nombre}</p>`;
+    
+    if(!id || !cant || cant <= 0) return alert("Selecciona un producto y cantidad válida");
+    
+    const option = select.options[select.selectedIndex];
+    const precio = parseFloat(option.getAttribute('data-precio'));
+    const nombreLimpio = option.text.split(' (')[0]; // Quitamos el texto del precio para que se vea limpio
+    const subtotal = precio * cant;
+
+    carritoVentas.push({ id_producto: id, cantidad: cant, nombre: nombreLimpio, precio: precio, imagen: obtenerImagen(nombreLimpio) });
+    
+    document.getElementById('lista-productos-venta').innerHTML += `
+        <div class="d-flex align-items-center justify-content-between mb-2 pb-1 border-bottom">
+            <span class="small">✅ <span class="fw-bold">${cant}x</span> ${nombreLimpio}</span>
+            <span class="small text-success fw-bold">~ Q. ${subtotal.toFixed(2)}</span>
+        </div>`;
+        
     document.getElementById('venta-cantidad').value = '';
+    select.selectedIndex = 0;
 }
 
 function procesarPasoVentaUno() {
-    if(carritoVentas.length === 0) return alert("Agrega productos");
+    if(carritoVentas.length === 0) return alert("Agrega al menos un producto a tu lista de ventas.");
     modoActual = 'VENTA';
     document.getElementById('seccion-panel').classList.add('oculto');
     document.getElementById('seccion-tipo-entrega-venta').classList.remove('oculto');
@@ -243,7 +302,7 @@ function regresarDesdeEntrega() {
 }
 
 // ==========================================
-// 4. NUEVO: FLUJO DE RESUMEN Y CONFIRMACIÓN
+// 5. FLUJO DE RESUMEN Y CONFIRMACIÓN
 // ==========================================
 function mostrarResumenPedido() {
     document.getElementById('seccion-tipo-entrega-venta').classList.add('oculto');
@@ -265,20 +324,36 @@ function mostrarResumenPedido() {
         carritoProductos.forEach(i => {
             const sub = i.precio_unitario * i.cantidad;
             total += sub;
-            listaItems.innerHTML += `<div class="d-flex justify-content-between mb-2 pb-1 border-bottom border-light"><span><span class="text-muted">${i.cantidad}x</span> ${i.nombre}</span><span class="fw-bold">Q. ${sub.toFixed(2)}</span></div>`;
+            listaItems.innerHTML += `
+                <div class="d-flex align-items-center justify-content-between mb-2 pb-1 border-bottom border-light">
+                    <div class="d-flex align-items-center gap-2">
+                        <img src="${i.imagen}" style="width: 30px; height: 30px; object-fit: cover; border-radius: 4px;">
+                        <span><span class="text-muted">${i.cantidad}x</span> <span class="fw-bold">${i.nombre}</span></span>
+                    </div>
+                    <span class="fw-bold text-dark">Q. ${sub.toFixed(2)}</span>
+                </div>`;
         });
         valorTotal.innerText = `Q. ${total.toFixed(2)}`;
         valorTotal.className = 'text-success fw-bold fs-4';
     } else {
         document.getElementById('resumen-tipo-op').innerText = 'Ofrecimiento de Cosecha';
         document.getElementById('resumen-pago').innerText = 'Pago sujeto a calidad en Kiosco';
-        labelTotal.innerText = 'Total:';
+        labelTotal.innerText = 'Ganancia Estimada:';
 
         carritoVentas.forEach(i => {
-            listaItems.innerHTML += `<div class="mb-1 text-dark">• <span class="fw-bold">${i.cantidad}x</span> ${i.nombre}</div>`;
+            const sub = i.precio * i.cantidad;
+            total += sub;
+            listaItems.innerHTML += `
+                <div class="d-flex align-items-center justify-content-between mb-2 pb-1 border-bottom border-light">
+                    <div class="d-flex align-items-center gap-2">
+                        <img src="${i.imagen}" style="width: 30px; height: 30px; object-fit: cover; border-radius: 4px;">
+                        <span><span class="text-muted">${i.cantidad}x</span> <span class="fw-bold">${i.nombre}</span></span>
+                    </div>
+                    <span class="fw-bold text-success">~ Q. ${sub.toFixed(2)}</span>
+                </div>`;
         });
-        valorTotal.innerText = 'Pendiente de Avalúo';
-        valorTotal.className = 'text-primary fw-bold fs-6';
+        valorTotal.innerText = `~ Q. ${total.toFixed(2)}`;
+        valorTotal.className = 'text-primary fw-bold fs-5';
     }
 }
 
