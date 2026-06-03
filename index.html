@@ -24,7 +24,7 @@
         .btn-figma-actividad { position: relative; z-index: 2; background-color: var(--color-verde-figma); color: #ffffff; border: none; width: 90%; padding: 0.9rem 1rem; font-size: 1.1rem; font-weight: 500; margin: 0.5rem 0; transition: 0.2s; border-radius: 8px; }
         .btn-figma-actividad:hover { background-color: #0b7a44; color: #ffffff; }
         
-        .opcion-entrega-row { background-color: var(--color-verde-figma); color: #ffffff; display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem; border-radius: 4px; cursor: pointer; border: 3px solid transparent; padding: 1.5rem 1rem; }
+        .opcion-entrega-row { background-color: var(--color-verde-figma); color: #ffffff; display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.5rem; border-radius: 4px; cursor: pointer; border: 3px solid transparent; padding: 1.5rem 1rem; }
         .opcion-entrega-row.seleccionada { border-color: var(--color-principal); box-shadow: 0 0 12px rgba(27,67,50,0.35); transform: scale(1.02); }
         .opcion-entrega-texto { font-size: 1.2rem; font-weight: 600; text-align: center; width: 100%; }
         
@@ -35,7 +35,7 @@
 
     <nav class="navbar navbar-esperanza shadow-sm sticky-top">
         <div class="container">
-            <span class="navbar-brand navbar-brand-custom mb-0 h1"> La Esperanza</span>
+            <span class="navbar-brand navbar-brand-custom mb-0 h1">🌾 La Esperanza</span>
             <div id="nav-usuario" class="oculto d-flex align-items-center">
                 <span id="nombre-usuario" class="me-3 fw-medium text-dark small d-none d-md-inline"></span>
                 <button onclick="cerrarSesion()" class="btn btn-sm btn-outline-danger">Salir</button>
@@ -44,7 +44,7 @@
     </nav>
 
     <button id="btn-flotante-ver-carrito" class="btn-flotante-carrito oculto" onclick="irAlCarritoPestaña()">
-         Carrito <span id="badge-flotante-conteo" class="badge bg-white text-dark rounded-circle px-2 py-1">0</span>
+        🛒 Carrito <span id="badge-flotante-conteo" class="badge bg-white text-dark rounded-circle px-2 py-1">0</span>
     </button>
 
     <div class="container mt-4 mb-5">
@@ -72,10 +72,10 @@
                 <div class="encabezado-actividad">MENÚ PRINCIPAL</div>
                 <div class="cuerpo-actividad">
                     <div class="w-100 text-center" style="position: relative; z-index: 2;">
-                        <button class="btn-figma-actividad w-100" onclick="seleccionarActividad('comprar')"> Comprar Insumos</button>
-                        <button class="btn-figma-actividad w-100" onclick="seleccionarActividad('vender')"> Vender Cosecha</button>
+                        <button class="btn-figma-actividad w-100" onclick="seleccionarActividad('comprar')">🛒 Comprar Insumos</button>
+                        <button class="btn-figma-actividad w-100" onclick="seleccionarActividad('vender')">🚜 Vender Cosecha</button>
                         <hr class="text-white my-4">
-                        <button class="btn-figma-actividad w-100" style="background-color: #2c3e50;" onclick="abrirMisPedidos()"> Historial y Gestión de Entregas</button>
+                        <button class="btn-figma-actividad w-100" style="background-color: #2c3e50;" onclick="abrirMisPedidos()">📦 Historial y Gestión de Entregas</button>
                     </div>
                 </div>
             </div>
@@ -129,11 +129,8 @@
                         <input type="number" id="venta-cantidad" class="form-control mb-3" placeholder="Cantidad (Lbs/Quintales)">
                         <button onclick="agregarProductoALaVenta()" class="btn btn-success w-100 mb-4">+ Agregar a mi lista</button>
                         <div id="lista-productos-venta" class="mb-3"></div>
-                        <select id="venta-kiosco" class="form-select mb-4">
-                            <option value="Kiosco Central">Kiosco Central</option>
-                            <option value="Kiosco Norte">Kiosco Norte</option>
-                        </select>
-                        <button onclick="procesarPasoVentaUno()" class="btn-principal w-100">Siguiente: Tipo de Entrega →</button>
+                        
+                        <button onclick="procesarPasoVentaUno()" class="btn-principal w-100 mt-2">Siguiente: Tipo de Entrega →</button>
                     </div>
                 </div>
             </div>
@@ -149,6 +146,25 @@
                     <div id="opcion-puntoventa" class="opcion-entrega-row" onclick="seleccionarMetodoEntregaVenta('Punto de Venta')">
                         <div class="opcion-entrega-texto">KIOSCO FÍSICO</div>
                     </div>
+
+                    <div id="detalles-entrega-dinamico" class="mt-3 p-3 bg-white rounded shadow-sm border" style="border-color: var(--color-verde-figma) !important;">
+                        
+                        <div id="div-direccion-domicilio">
+                            <label class="form-label small fw-bold text-dark mb-1">📍 Dirección exacta de entrega:</label>
+                            <input type="text" id="input-direccion-entrega" class="form-control" placeholder="Ej. 4ta Calle 5-10, Zona 1, Ciudad">
+                        </div>
+                        
+                        <div id="div-seleccion-kiosco" class="oculto">
+                            <label class="form-label small fw-bold text-dark mb-1">🏪 Seleccione su Kiosco:</label>
+                            <select id="select-kiosco-entrega" class="form-select">
+                                <option value="Kiosco Central (Zona 1)">Kiosco Central (Zona 1)</option>
+                                <option value="Kiosco Norte (Ruta al Atlántico)">Kiosco Norte (Ruta al Atlántico)</option>
+                                <option value="Kiosco Sur (Ruta al Pacífico)">Kiosco Sur (Ruta al Pacífico)</option>
+                            </select>
+                        </div>
+
+                    </div>
+
                     <button class="btn-principal w-100 mt-4 py-3 shadow-sm fs-5" onclick="mostrarResumenPedido()">Siguiente: Revisar Orden →</button>
                     <div class="text-center mt-3"><button class="btn btn-link text-muted text-decoration-none" onclick="regresarDesdeEntrega()">← Cancelar</button></div>
                 </div>
@@ -161,7 +177,7 @@
                 <div class="p-4 flex-grow-1 bg-light">
                     
                     <div class="card-custom p-3 shadow-sm mb-3 border-top border-4 border-success">
-                        <h6 class="fw-bold text-muted mb-3 border-bottom pb-2"> DETALLE DE ARTÍCULOS</h6>
+                        <h6 class="fw-bold text-muted mb-3 border-bottom pb-2">📋 DETALLE DE ARTÍCULOS</h6>
                         <div id="lista-resumen-items" class="small mb-2 text-dark"></div>
                         <div class="d-flex justify-content-between fw-bold fs-5 mt-3 pt-2 border-top">
                             <span id="label-total-resumen">Total:</span>
@@ -170,7 +186,7 @@
                     </div>
                     
                     <div class="card-custom p-3 shadow-sm mb-4">
-                        <h6 class="fw-bold text-muted mb-2 border-bottom pb-2"> DATOS DE LOGÍSTICA</h6>
+                        <h6 class="fw-bold text-muted mb-2 border-bottom pb-2">🚚 DATOS DE LOGÍSTICA</h6>
                         <p class="mb-1 small"><strong>Operación:</strong> <span id="resumen-tipo-op" class="text-dark"></span></p>
                         <p class="mb-1 small"><strong>Entrega:</strong> <span id="resumen-metodo-entrega" class="text-dark"></span></p>
                         <p class="mb-0 small"><strong>Pago:</strong> <span id="resumen-pago" class="text-dark fw-bold"></span></p>
