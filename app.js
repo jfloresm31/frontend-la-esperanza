@@ -365,9 +365,19 @@ function regresarDesdeResumen() {
 async function confirmarFlujoFinal() {
     document.getElementById('alerta-resumen').innerHTML = '<div class="alert alert-info py-2 text-center small fw-bold">Procesando orden de forma segura... ⏳</div>';
 
+    // 1. Traducimos la variable al nombre exacto que espera tu Base de Datos
+    const productosVentaPayload = carritoVentas.map(item => ({
+        id_producto: item.id_producto,
+        cantidad_ofrecida: item.cantidad
+    }));
+
+    // 2. Rescatamos el kiosco que el usuario seleccionó
+    const kioscoSeleccionado = document.getElementById('venta-kiosco').value || 'Kiosco Central';
+
+    // 3. Armamos el paquete de datos correcto
     const payload = modoActual === 'COMPRA' ? 
         { id_cliente: usuarioActual.id_cliente, tipo_entrega: metodoEntregaSeleccionado, metodo_pago: 'Efectivo', carrito: carritoProductos } :
-        { id_cliente: usuarioActual.id_cliente, kiosco_entrega: 'Central', metodo_recepcion: metodoEntregaSeleccionado, productos: carritoVentas };
+        { id_cliente: usuarioActual.id_cliente, kiosco_entrega: kioscoSeleccionado, metodo_recepcion: metodoEntregaSeleccionado, productos: productosVentaPayload };
     
     const endpoint = modoActual === 'COMPRA' ? '/api/checkout' : '/api/vender';
     
@@ -376,6 +386,7 @@ async function confirmarFlujoFinal() {
             method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(payload)
         });
         const data = await res.json();
+        
         if(res.ok) {
             document.getElementById('seccion-resumen-pedido').classList.add('oculto');
             document.getElementById('seccion-compra-exitosa').classList.remove('oculto');
@@ -383,14 +394,9 @@ async function confirmarFlujoFinal() {
             document.getElementById('alerta-resumen').innerHTML = '';
             carritoProductos = []; carritoVentas = [];
         } else { 
-            document.getElementById('alerta-resumen').innerHTML = '<div class="alert alert-danger py-2 text-center small">No se pudo procesar. Verifique el inventario.</div>';
+            document.getElementById('alerta-resumen').innerHTML = '<div class="alert alert-danger py-2 text-center small">No se pudo procesar. Hubo un error en el servidor.</div>';
         }
     } catch(e) { 
         document.getElementById('alerta-resumen').innerHTML = '<div class="alert alert-danger py-2 text-center small">Error de red.</div>'; 
     }
-}
-
-function regresarAlMenuDesdeExito() {
-    document.getElementById('seccion-compra-exitosa').classList.add('oculto');
-    document.getElementById('seccion-seleccion-actividad').classList.remove('oculto');
 }
